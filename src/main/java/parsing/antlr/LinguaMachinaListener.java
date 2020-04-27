@@ -18,6 +18,86 @@ public interface LinguaMachinaListener extends ParseTreeListener {
 	 */
 	void exitCompOp(LinguaMachinaParser.CompOpContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link LinguaMachinaParser#eqOp}.
+	 * @param ctx the parse tree
+	 */
+	void enterEqOp(LinguaMachinaParser.EqOpContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link LinguaMachinaParser#eqOp}.
+	 * @param ctx the parse tree
+	 */
+	void exitEqOp(LinguaMachinaParser.EqOpContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link LinguaMachinaParser#arithOp}.
+	 * @param ctx the parse tree
+	 */
+	void enterArithOp(LinguaMachinaParser.ArithOpContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link LinguaMachinaParser#arithOp}.
+	 * @param ctx the parse tree
+	 */
+	void exitArithOp(LinguaMachinaParser.ArithOpContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link LinguaMachinaParser#integerLiteral}.
+	 * @param ctx the parse tree
+	 */
+	void enterIntegerLiteral(LinguaMachinaParser.IntegerLiteralContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link LinguaMachinaParser#integerLiteral}.
+	 * @param ctx the parse tree
+	 */
+	void exitIntegerLiteral(LinguaMachinaParser.IntegerLiteralContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link LinguaMachinaParser#doubleLiteral}.
+	 * @param ctx the parse tree
+	 */
+	void enterDoubleLiteral(LinguaMachinaParser.DoubleLiteralContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link LinguaMachinaParser#doubleLiteral}.
+	 * @param ctx the parse tree
+	 */
+	void exitDoubleLiteral(LinguaMachinaParser.DoubleLiteralContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link LinguaMachinaParser#stringLiteral}.
+	 * @param ctx the parse tree
+	 */
+	void enterStringLiteral(LinguaMachinaParser.StringLiteralContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link LinguaMachinaParser#stringLiteral}.
+	 * @param ctx the parse tree
+	 */
+	void exitStringLiteral(LinguaMachinaParser.StringLiteralContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link LinguaMachinaParser#charLiteral}.
+	 * @param ctx the parse tree
+	 */
+	void enterCharLiteral(LinguaMachinaParser.CharLiteralContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link LinguaMachinaParser#charLiteral}.
+	 * @param ctx the parse tree
+	 */
+	void exitCharLiteral(LinguaMachinaParser.CharLiteralContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link LinguaMachinaParser#symbolLiteral}.
+	 * @param ctx the parse tree
+	 */
+	void enterSymbolLiteral(LinguaMachinaParser.SymbolLiteralContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link LinguaMachinaParser#symbolLiteral}.
+	 * @param ctx the parse tree
+	 */
+	void exitSymbolLiteral(LinguaMachinaParser.SymbolLiteralContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link LinguaMachinaParser#identifier}.
+	 * @param ctx the parse tree
+	 */
+	void enterIdentifier(LinguaMachinaParser.IdentifierContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link LinguaMachinaParser#identifier}.
+	 * @param ctx the parse tree
+	 */
+	void exitIdentifier(LinguaMachinaParser.IdentifierContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link LinguaMachinaParser#arrayLiteral}.
 	 * @param ctx the parse tree
 	 */
@@ -138,6 +218,16 @@ public interface LinguaMachinaListener extends ParseTreeListener {
 	 */
 	void exitFactorExpr(LinguaMachinaParser.FactorExprContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link LinguaMachinaParser#parenExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterParenExpression(LinguaMachinaParser.ParenExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link LinguaMachinaParser#parenExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitParenExpression(LinguaMachinaParser.ParenExpressionContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link LinguaMachinaParser#atom}.
 	 * @param ctx the parse tree
 	 */
@@ -147,6 +237,26 @@ public interface LinguaMachinaListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitAtom(LinguaMachinaParser.AtomContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link LinguaMachinaParser#unaryMinus}.
+	 * @param ctx the parse tree
+	 */
+	void enterUnaryMinus(LinguaMachinaParser.UnaryMinusContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link LinguaMachinaParser#unaryMinus}.
+	 * @param ctx the parse tree
+	 */
+	void exitUnaryMinus(LinguaMachinaParser.UnaryMinusContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link LinguaMachinaParser#unaryNot}.
+	 * @param ctx the parse tree
+	 */
+	void enterUnaryNot(LinguaMachinaParser.UnaryNotContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link LinguaMachinaParser#unaryNot}.
+	 * @param ctx the parse tree
+	 */
+	void exitUnaryNot(LinguaMachinaParser.UnaryNotContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link LinguaMachinaParser#unary}.
 	 * @param ctx the parse tree
@@ -258,41 +368,35 @@ public interface LinguaMachinaListener extends ParseTreeListener {
 	 */
 	void exitCompileStatement(LinguaMachinaParser.CompileStatementContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code normalStatement}
-	 * labeled alternative in {@link LinguaMachinaParser#blockStatement}.
-	 * @param ctx the parse tree
-	 */
-	void enterNormalStatement(LinguaMachinaParser.NormalStatementContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code normalStatement}
-	 * labeled alternative in {@link LinguaMachinaParser#blockStatement}.
-	 * @param ctx the parse tree
-	 */
-	void exitNormalStatement(LinguaMachinaParser.NormalStatementContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code localReturn}
-	 * labeled alternative in {@link LinguaMachinaParser#blockStatement}.
+	 * Enter a parse tree produced by {@link LinguaMachinaParser#localReturn}.
 	 * @param ctx the parse tree
 	 */
 	void enterLocalReturn(LinguaMachinaParser.LocalReturnContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code localReturn}
-	 * labeled alternative in {@link LinguaMachinaParser#blockStatement}.
+	 * Exit a parse tree produced by {@link LinguaMachinaParser#localReturn}.
 	 * @param ctx the parse tree
 	 */
 	void exitLocalReturn(LinguaMachinaParser.LocalReturnContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code nonLocalReturn}
-	 * labeled alternative in {@link LinguaMachinaParser#blockStatement}.
+	 * Enter a parse tree produced by {@link LinguaMachinaParser#nonLocalReturn}.
 	 * @param ctx the parse tree
 	 */
 	void enterNonLocalReturn(LinguaMachinaParser.NonLocalReturnContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code nonLocalReturn}
-	 * labeled alternative in {@link LinguaMachinaParser#blockStatement}.
+	 * Exit a parse tree produced by {@link LinguaMachinaParser#nonLocalReturn}.
 	 * @param ctx the parse tree
 	 */
 	void exitNonLocalReturn(LinguaMachinaParser.NonLocalReturnContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link LinguaMachinaParser#blockStatement}.
+	 * @param ctx the parse tree
+	 */
+	void enterBlockStatement(LinguaMachinaParser.BlockStatementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link LinguaMachinaParser#blockStatement}.
+	 * @param ctx the parse tree
+	 */
+	void exitBlockStatement(LinguaMachinaParser.BlockStatementContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link LinguaMachinaParser#statement}.
 	 * @param ctx the parse tree

@@ -17,6 +17,54 @@ public interface LinguaMachinaVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitCompOp(LinguaMachinaParser.CompOpContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link LinguaMachinaParser#eqOp}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitEqOp(LinguaMachinaParser.EqOpContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link LinguaMachinaParser#arithOp}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitArithOp(LinguaMachinaParser.ArithOpContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link LinguaMachinaParser#integerLiteral}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIntegerLiteral(LinguaMachinaParser.IntegerLiteralContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link LinguaMachinaParser#doubleLiteral}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitDoubleLiteral(LinguaMachinaParser.DoubleLiteralContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link LinguaMachinaParser#stringLiteral}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitStringLiteral(LinguaMachinaParser.StringLiteralContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link LinguaMachinaParser#charLiteral}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCharLiteral(LinguaMachinaParser.CharLiteralContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link LinguaMachinaParser#symbolLiteral}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSymbolLiteral(LinguaMachinaParser.SymbolLiteralContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link LinguaMachinaParser#identifier}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIdentifier(LinguaMachinaParser.IdentifierContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link LinguaMachinaParser#arrayLiteral}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -89,11 +137,29 @@ public interface LinguaMachinaVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitFactorExpr(LinguaMachinaParser.FactorExprContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link LinguaMachinaParser#parenExpression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitParenExpression(LinguaMachinaParser.ParenExpressionContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link LinguaMachinaParser#atom}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitAtom(LinguaMachinaParser.AtomContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link LinguaMachinaParser#unaryMinus}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitUnaryMinus(LinguaMachinaParser.UnaryMinusContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link LinguaMachinaParser#unaryNot}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitUnaryNot(LinguaMachinaParser.UnaryNotContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link LinguaMachinaParser#unary}.
 	 * @param ctx the parse tree
@@ -161,26 +227,23 @@ public interface LinguaMachinaVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitCompileStatement(LinguaMachinaParser.CompileStatementContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code normalStatement}
-	 * labeled alternative in {@link LinguaMachinaParser#blockStatement}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitNormalStatement(LinguaMachinaParser.NormalStatementContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code localReturn}
-	 * labeled alternative in {@link LinguaMachinaParser#blockStatement}.
+	 * Visit a parse tree produced by {@link LinguaMachinaParser#localReturn}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitLocalReturn(LinguaMachinaParser.LocalReturnContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code nonLocalReturn}
-	 * labeled alternative in {@link LinguaMachinaParser#blockStatement}.
+	 * Visit a parse tree produced by {@link LinguaMachinaParser#nonLocalReturn}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitNonLocalReturn(LinguaMachinaParser.NonLocalReturnContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link LinguaMachinaParser#blockStatement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBlockStatement(LinguaMachinaParser.BlockStatementContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link LinguaMachinaParser#statement}.
 	 * @param ctx the parse tree

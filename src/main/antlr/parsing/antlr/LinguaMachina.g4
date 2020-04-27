@@ -31,19 +31,41 @@ GreaterOrEq: '>=';
 Lower: '<';
 Greater: '>';
 
+Equal: '==';
+NotEqual: '!=';
+
+Plus: '+';
+Minus: '-';
+
 compOp: LowerOrEq | Lower | GreaterOrEq | Greater;
 
-arrayLiteral: '[' (items+=expression (',' items+=expression)*)? ']';
+eqOp: Equal | NotEqual;
+
+arithOp: Plus | Minus;
+
+integerLiteral: IntegerLiteral;
+
+doubleLiteral: DoubleLiteral;
+
+stringLiteral: StringLiteral;
+
+charLiteral: CharLiteral;
+
+symbolLiteral: SymbolLiteral;
+
+identifier: Identifier;
+
+arrayLiteral: '[' (expression (',' expression)*)? ']';
 
 blockLiteral: '{' (params+=BlockLiteralParam+ '|')? blockStatements? '}';
 
 literal:
-      IntegerLiteral
-    | DoubleLiteral
-    | StringLiteral
-    | CharLiteral
-    | SymbolLiteral
-    | Identifier
+      integerLiteral
+    | doubleLiteral
+    | stringLiteral
+    | charLiteral
+    | symbolLiteral
+    | identifier
     | arrayLiteral
     | blockLiteral
 ;
@@ -56,69 +78,80 @@ orExpr: andExpr ('||' andExpr)* ;
 
 andExpr: eqExpr ('&&' eqExpr)* ;
 
-eqExpr: compExpr (('==' | '!=') compExpr)? ;
+eqExpr: compExpr (eqOp compExpr)? ;
 
 compExpr: arithExpr (compOp arithExpr)? ;
 
-arithExpr: termExpr (('+' | '-') termExpr)* ;
+arithExpr: termExpr (arithOp termExpr)* ;
 
 termExpr: factorExpr ('*' factorExpr)* ;
 
 factorExpr: messageExpr ('/' messageExpr)? ;
 
+parenExpression: '(' expression ')';
+
 atom:
       literal
-    | '(' expression ')'
+    | parenExpression
 ;
 
+unaryMinus: '-' atom;
+
+unaryNot: '!' atom;
+
 unary:
-      '-' atom
-    | '!' atom
+      unaryMinus
+    | unaryNot
     | atom
 ;
 
-messageExpr: receiver=unary (messageSelector messageCascadeOrChain?)? ;
+messageExpr: unary messageCascadeOrChain? ;
 
 messageSelector:
-    (keywords+=Identifier
-          (':' values+=paramExpression
-              (keywords+=Identifier ':' values+=paramExpression)*
+    (identifier
+          (':' paramExpression
+              (identifier ':' paramExpression)*
           )?
     )
 ;
 
 messageCascadeOrChain:
-      messageChain
+      messageSelector
+    | messageChain
     | messageCascade
 ;
 
-messageCascade: ('|' messageCascadeOrChainMember)+ ;
+messageCascade: messageSelector ('|' messageCascadeOrChainMember)+ ;
 
-messageChain: ('|>' messageCascadeOrChainMember)+ ;
+messageChain: messageSelector ('|>' messageCascadeOrChainMember)+ ;
 
 messageCascadeOrChainMember:
       messageSelector
-    | '(' messageSelector messageCascadeOrChain? ')'
+    | '(' messageCascadeOrChain ')'
 ;
 
-varDeclaration: Identifier ':=' expression;
+varDeclaration: identifier ':=' expression;
 
-varAssignment: Identifier '=' expression;
+varAssignment: identifier '=' expression;
 
 compileStatementMethodParams:
-    (keywords+=Identifier
-        (':' variables+=Identifier
-            (keywords+=Identifier ':' variables+=Identifier)*
+    (keywords+=identifier
+        (':' params+=identifier
+            (keywords+=identifier ':' params+=identifier)*
         )?
     )
 ;
 
 compileStatement: expression '>>' compileStatementMethodParams '{' blockStatements? '}';
 
+localReturn: '<' expression;
+
+nonLocalReturn: '^' expression;
+
 blockStatement:
-    statement # normalStatement
-    | '<' expression # localReturn
-    | '^' expression # nonLocalReturn
+    statement
+    | localReturn
+    | nonLocalReturn
 ;
 
 statement:
@@ -128,8 +161,8 @@ statement:
     | compileStatement
 ;
 
-blockStatements: stmts+=blockStatement (';' stmts+=blockStatement)* ';'? ;
+blockStatements: blockStatement (';' blockStatement)* ';'? ;
 
-statements: stmts+=statement (';' stmts+=statement)* ';'? ;
+statements: statement (';' statement)* ';'? ;
 
 root: statements EOF;
