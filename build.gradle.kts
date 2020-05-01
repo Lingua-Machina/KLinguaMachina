@@ -1,6 +1,7 @@
 plugins {
-    kotlin("jvm") version "1.3.71"
-    antlr
+    kotlin("jvm") version "1.3.72"
+    application
+    distribution
 }
 
 group = "org.lingua-machina.klingua-machina"
@@ -10,12 +11,16 @@ repositories {
     mavenCentral()
 }
 
+application {
+    mainClassName = "cli.MainKt"
+}
+
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
-    antlr("org.antlr:antlr4:4.8")
+    implementation(kotlin("reflect"))
+    implementation("org.antlr:antlr4:4.8")
 
     testImplementation("org.junit.jupiter:junit-jupiter:5.6.1")
-    implementation(kotlin("reflect"))
 }
 
 tasks {
@@ -28,11 +33,10 @@ tasks {
     }
     compileKotlin {
         kotlinOptions.jvmTarget = "1.8"
+        kotlinOptions.freeCompilerArgs += "-XXLanguage:+NewInference"
     }
     compileTestKotlin {
         kotlinOptions.jvmTarget = "1.8"
-    }
-    generateGrammarSource {
-        // TODO
+        kotlinOptions.freeCompilerArgs += "-XXLanguage:+NewInference"
     }
 }
