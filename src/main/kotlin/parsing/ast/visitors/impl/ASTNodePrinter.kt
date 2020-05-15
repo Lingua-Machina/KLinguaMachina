@@ -6,9 +6,11 @@ import parsing.ast.visitors.impl.astnodeprinter.ASTStringBuilder
 
 class ASTNodePrinter: AbstractBaseASTNodeVisitor<String>() {
 
-    private val stub = ""
+    private val stub = defaultValue()
 
     private val builder = ASTStringBuilder()
+
+    override fun defaultValue() = ""
 
     override fun visit(node: ArrayLiteralNode): String {
         builder {
@@ -62,6 +64,29 @@ class ASTNodePrinter: AbstractBaseASTNodeVisitor<String>() {
                 }
 
                 node.block.statements.forEach { visit(it) }
+            }
+            +"}"
+        }
+        return stub
+    }
+
+    override fun visit(node: PrimitiveDeclStatementNode): String {
+        builder {
+            +"PrimitiveDeclStatement {"
+            indent {
+                -"receiver = "
+                noIndentNext()
+                visit(node.receiver)
+
+                if (node.keywords.isNotEmpty() && node.paramNames.isEmpty()) {
+                    +node.keywords[0]
+                } else {
+                    node.keywords.zip(node.paramNames).forEach { (keyword, param) ->
+                        +"$keyword: $param"
+                    }
+                }
+
+                +"primitiveName = ${node.primitiveName}"
             }
             +"}"
         }

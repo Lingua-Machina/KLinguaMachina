@@ -134,7 +134,7 @@ varDeclaration: identifier ':=' expression;
 
 varAssignment: identifier '=' expression;
 
-compileStatementMethodParams:
+methodParams:
     (keywords+=identifier
         (':' params+=identifier
             (keywords+=identifier ':' params+=identifier)*
@@ -142,7 +142,9 @@ compileStatementMethodParams:
     )
 ;
 
-compileStatement: expression '>>' compileStatementMethodParams '{' blockStatements? '}';
+compileStatement: expression '>>' methodParams '{' blockStatements? '}';
+
+primitiveDeclStatement: expression '::' methodParams '=' symbolLiteral;
 
 localReturn: '<' expression;
 
@@ -159,6 +161,7 @@ statement:
     | varDeclaration
     | varAssignment
     | compileStatement
+    | primitiveDeclStatement
 ;
 
 blockStatements: blockStatement (';' blockStatement)* ';'? ;

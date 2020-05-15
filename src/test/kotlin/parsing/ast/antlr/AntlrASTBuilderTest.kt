@@ -178,6 +178,19 @@ internal class AntlrASTBuilderTest {
     }
 
     @Test
+    fun `parse a primitive declaration statement`() {
+        // GIVEN a primitive declaration statement
+        val input = """
+            Hello class :: yeet: hello = 'yeetPrimitive:
+        """.trimIndent()
+
+        // WHEN parsing the input
+        AntlrASTBuilder().build(input, "<test>")
+
+        // THEN no exception is thrown
+    }
+
+    @Test
     fun `parse conditions`() {
         // GIVEN conditions
         val input = "a < b || b > a || a <= b || a >= b || a == b || a != b"

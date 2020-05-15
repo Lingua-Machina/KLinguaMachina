@@ -424,13 +424,13 @@ public class LinguaMachinaBaseListener implements LinguaMachinaListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterCompileStatementMethodParams(LinguaMachinaParser.CompileStatementMethodParamsContext ctx) { }
+	@Override public void enterMethodParams(LinguaMachinaParser.MethodParamsContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitCompileStatementMethodParams(LinguaMachinaParser.CompileStatementMethodParamsContext ctx) { }
+	@Override public void exitMethodParams(LinguaMachinaParser.MethodParamsContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -443,6 +443,18 @@ public class LinguaMachinaBaseListener implements LinguaMachinaListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitCompileStatement(LinguaMachinaParser.CompileStatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterPrimitiveDeclStatement(LinguaMachinaParser.PrimitiveDeclStatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitPrimitiveDeclStatement(LinguaMachinaParser.PrimitiveDeclStatementContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

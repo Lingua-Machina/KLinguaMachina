@@ -215,17 +215,23 @@ public interface LinguaMachinaVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitVarAssignment(LinguaMachinaParser.VarAssignmentContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link LinguaMachinaParser#compileStatementMethodParams}.
+	 * Visit a parse tree produced by {@link LinguaMachinaParser#methodParams}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitCompileStatementMethodParams(LinguaMachinaParser.CompileStatementMethodParamsContext ctx);
+	T visitMethodParams(LinguaMachinaParser.MethodParamsContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link LinguaMachinaParser#compileStatement}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitCompileStatement(LinguaMachinaParser.CompileStatementContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link LinguaMachinaParser#primitiveDeclStatement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitPrimitiveDeclStatement(LinguaMachinaParser.PrimitiveDeclStatementContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link LinguaMachinaParser#localReturn}.
 	 * @param ctx the parse tree

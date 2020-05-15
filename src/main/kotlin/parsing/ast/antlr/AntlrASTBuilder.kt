@@ -1,6 +1,5 @@
 package parsing.ast.antlr
 
-import org.antlr.v4.runtime.BailErrorStrategy
 import org.antlr.v4.runtime.CommonTokenStream
 import org.antlr.v4.runtime.CharStreams
 import org.antlr.v4.runtime.Token
@@ -16,13 +15,13 @@ import parsing.ast.nodes.impl.*
 
 class AntlrASTBuilder: LinguaMachinaBaseVisitor<ASTNode>(), ASTBuilder {
 
-    override fun build(input: String, sourceName: String): ASTNode {
+    override fun build(input: String, sourceName: String): RootNode {
         val lexer = LinguaMachinaLexer(CharStreams.fromString(input, sourceName))
         val parser = LinguaMachinaParser(CommonTokenStream(lexer))
         // remove the default error listener to disable error printing
         parser.removeErrorListeners()
         parser.addErrorListener(AntlrASTErrorListener())
-        return visit(parser.root())
+        return castASTNode(visit(parser.root()))
     }
 
     /********************* Utility Methods *********************/
@@ -125,8 +124,9 @@ class AntlrASTBuilder: LinguaMachinaBaseVisitor<ASTNode>(), ASTBuilder {
         return BlockLiteralNode(
             position(ctx.start),
             ctx.params.map { it.text.substring(1) },
-            ctx.blockStatements().blockStatement()
-                .map { castASTNode(visit(it)) }
+            ctx.blockStatements()?.blockStatement()
+                ?.map { castASTNode(visit(it)) }
+                ?: emptyList()
         )
     }
 
@@ -321,18 +321,32 @@ class AntlrASTBuilder: LinguaMachinaBaseVisitor<ASTNode>(), ASTBuilder {
         return CompileStatementNode(
             position(ctx.start),
             castASTNode(visit(ctx.expression())),
-            ctx.compileStatementMethodParams().keywords.map {
+            ctx.methodParams().keywords.map {
                 castASTNode<IdentifierNode>(visit(it)).value
             },
             BlockLiteralNode(
-                position(ctx.compileStatementMethodParams().stop),
-                ctx.compileStatementMethodParams().params.map {
+                position(ctx.methodParams().stop),
+                ctx.methodParams().params.map {
                     castASTNode<IdentifierNode>(visit(it)).value
                 },
-                ctx.blockStatements().blockStatement().map {
+                ctx.blockStatements()?.blockStatement()?.map {
                     castASTNode(visit(it))
-                }
+                } ?: emptyList()
             )
+        )
+    }
+
+    override fun visitPrimitiveDeclStatement(ctx: LinguaMachinaParser.PrimitiveDeclStatementContext): ASTNode {
+        return PrimitiveDeclStatementNode(
+            position(ctx.start),
+            castASTNode(visit(ctx.expression())),
+            ctx.methodParams().keywords.map {
+                castASTNode<IdentifierNode>(visit(it)).value
+            },
+            ctx.methodParams().params.map {
+                castASTNode<IdentifierNode>(visit(it)).value
+            },
+            castASTNode<SymbolLiteralNode>(visit(ctx.symbolLiteral())).value
         )
     }
 

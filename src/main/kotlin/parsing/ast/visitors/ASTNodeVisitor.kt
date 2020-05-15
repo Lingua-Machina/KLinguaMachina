@@ -11,6 +11,8 @@ interface ASTNodeVisitor<R> {
 
     fun visit(node: CompileStatementNode): R
 
+    fun visit(node: PrimitiveDeclStatementNode): R
+
     fun visit(node: DoubleLiteralNode): R
 
     fun visit(node: IdentifierNode): R

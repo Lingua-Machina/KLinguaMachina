@@ -348,15 +348,15 @@ public interface LinguaMachinaListener extends ParseTreeListener {
 	 */
 	void exitVarAssignment(LinguaMachinaParser.VarAssignmentContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link LinguaMachinaParser#compileStatementMethodParams}.
+	 * Enter a parse tree produced by {@link LinguaMachinaParser#methodParams}.
 	 * @param ctx the parse tree
 	 */
-	void enterCompileStatementMethodParams(LinguaMachinaParser.CompileStatementMethodParamsContext ctx);
+	void enterMethodParams(LinguaMachinaParser.MethodParamsContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link LinguaMachinaParser#compileStatementMethodParams}.
+	 * Exit a parse tree produced by {@link LinguaMachinaParser#methodParams}.
 	 * @param ctx the parse tree
 	 */
-	void exitCompileStatementMethodParams(LinguaMachinaParser.CompileStatementMethodParamsContext ctx);
+	void exitMethodParams(LinguaMachinaParser.MethodParamsContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link LinguaMachinaParser#compileStatement}.
 	 * @param ctx the parse tree
@@ -367,6 +367,16 @@ public interface LinguaMachinaListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitCompileStatement(LinguaMachinaParser.CompileStatementContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link LinguaMachinaParser#primitiveDeclStatement}.
+	 * @param ctx the parse tree
+	 */
+	void enterPrimitiveDeclStatement(LinguaMachinaParser.PrimitiveDeclStatementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link LinguaMachinaParser#primitiveDeclStatement}.
+	 * @param ctx the parse tree
+	 */
+	void exitPrimitiveDeclStatement(LinguaMachinaParser.PrimitiveDeclStatementContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link LinguaMachinaParser#localReturn}.
 	 * @param ctx the parse tree

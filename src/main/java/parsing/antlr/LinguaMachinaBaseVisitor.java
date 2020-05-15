@@ -255,7 +255,7 @@ public class LinguaMachinaBaseVisitor<T> extends AbstractParseTreeVisitor<T> imp
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitCompileStatementMethodParams(LinguaMachinaParser.CompileStatementMethodParamsContext ctx) { return visitChildren(ctx); }
+	@Override public T visitMethodParams(LinguaMachinaParser.MethodParamsContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -263,6 +263,13 @@ public class LinguaMachinaBaseVisitor<T> extends AbstractParseTreeVisitor<T> imp
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitCompileStatement(LinguaMachinaParser.CompileStatementContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitPrimitiveDeclStatement(LinguaMachinaParser.PrimitiveDeclStatementContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
