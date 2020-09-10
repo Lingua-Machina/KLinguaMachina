@@ -22,7 +22,7 @@ StringLiteral: '"' (('\\' .) | ~'"')* '"';
 
 CharLiteral: '$' ~[ \r\t\n] ;
 
-SymbolLiteral: '\'' [a-zA-Z0-9_$.:]+ ;
+SymbolLiteral: '\'' [a-zA-Z0-9_$.:/]+ ;
 
 Identifier: Ident;
 
