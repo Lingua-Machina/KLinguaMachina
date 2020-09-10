@@ -3,8 +3,8 @@ package parsing.ast.visitors
 import parsing.ast.nodes.*
 import parsing.ast.nodes.impl.*
 
-abstract class AbstractBaseASTNodeVisitor<R>: ASTNodeVisitor<R> {
-    abstract fun defaultValue(): R
+interface BaseASTNodeVisitor<R>: ASTNodeVisitor<R> {
+    fun defaultValue(): R
 
     fun visit(node: ExpressionNode) = when (node) {
         is ArrayLiteralNode -> visit(node)

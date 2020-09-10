@@ -1,10 +1,10 @@
 package parsing.ast.visitors.impl
 
 import parsing.ast.nodes.impl.*
-import parsing.ast.visitors.AbstractBaseASTNodeVisitor
+import parsing.ast.visitors.BaseASTNodeVisitor
 import parsing.ast.visitors.impl.astnodeprinter.ASTStringBuilder
 
-class ASTNodePrinter: AbstractBaseASTNodeVisitor<String>() {
+class ASTNodePrinter: BaseASTNodeVisitor<String> {
 
     private val stub = defaultValue()
 
