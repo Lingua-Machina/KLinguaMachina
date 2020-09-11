@@ -1,9 +1,10 @@
 package parsing.ast.nodes.impl
 
+import parsing.SourcePosition
 import parsing.ast.nodes.ExpressionNode
 
 class UnaryOperationNode(
-    position: NodePosition,
+    position: SourcePosition,
 
     val receiver: ExpressionNode,
     val op: UnaryOperationOp

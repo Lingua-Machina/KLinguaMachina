@@ -1,9 +1,9 @@
 package parsing.ast.nodes
 
-import parsing.ast.nodes.impl.NodePosition
+import parsing.SourcePosition
 
 abstract class Selectable(
-    position: NodePosition,
+    position: SourcePosition,
 
     var selectors: MutableList<Selectable>
 ): ASTNode(position)

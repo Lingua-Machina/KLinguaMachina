@@ -12,5 +12,6 @@ enum class OperationOp {
     PLUS,
     MINUS,
     TIMES,
-    DIVIDED_BY
+    DIVIDED_BY,
+    MODULO
 }

@@ -74,6 +74,14 @@ class CompiledBlock: Block, BytecodeEmitter, BytecodeStorage, LiteralStorage, Va
         appendImmediate(astNodeIndex)
     }
 
+    override fun emitAnd() {
+        appendBytecode(AND)
+    }
+
+    override fun emitOr() {
+        appendBytecode(OR)
+    }
+
     override fun emitAdd() {
         appendBytecode(ADD)
     }
@@ -92,6 +100,30 @@ class CompiledBlock: Block, BytecodeEmitter, BytecodeStorage, LiteralStorage, Va
 
     override fun emitMod() {
         appendBytecode(MOD)
+    }
+
+    override fun emitEq() {
+        appendBytecode(EQ)
+    }
+
+    override fun emitNeq() {
+        appendBytecode(NEQ)
+    }
+
+    override fun emitLower() {
+        appendBytecode(LOWER)
+    }
+
+    override fun emitLowerEq() {
+        appendBytecode(LOWER_EQ)
+    }
+
+    override fun emitGreater() {
+        appendBytecode(GREATER)
+    }
+
+    override fun emitGreaterEq() {
+        appendBytecode(GREATER_EQ)
     }
 
     override fun emitNeg() {
@@ -155,5 +187,36 @@ class CompiledBlock: Block, BytecodeEmitter, BytecodeStorage, LiteralStorage, Va
 
     override fun emitSwap() {
         appendBytecode(SWAP)
+    }
+
+    override fun toString(): String {
+        var out = "code:\n"
+        var bytecodeIndex = 0
+        var immediateArgIndex = 0
+
+        while (bytecodeIndex < bytecodes.size) {
+            val bytecode = Bytecode.values()[bytecodes[bytecodeIndex].toInt()]
+            out += "$bytecodeIndex: ${bytecode.name.toLowerCase()}"
+            bytecodeIndex++
+            immediateArgIndex = 0
+            while (immediateArgIndex < bytecode.immediateArgsCount) {
+                out += " ${bytecodes[bytecodeIndex + immediateArgIndex]}"
+                immediateArgIndex++
+            }
+            bytecodeIndex += bytecode.immediateArgsCount
+            out += "\n"
+        }
+
+        out += "\nliterals:\n"
+        for (entry in literalMap) {
+            out += "${entry.value}: ${entry.key}\n"
+        }
+
+        out += "\nvariables:\n"
+        for (entry in variableMap) {
+            out += "${entry.value}: ${entry.key}\n"
+        }
+
+        return out
     }
 }

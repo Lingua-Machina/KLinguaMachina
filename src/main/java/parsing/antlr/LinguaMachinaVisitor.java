@@ -137,6 +137,12 @@ public interface LinguaMachinaVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitFactorExpr(LinguaMachinaParser.FactorExprContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link LinguaMachinaParser#moduloExpr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitModuloExpr(LinguaMachinaParser.ModuloExprContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link LinguaMachinaParser#parenExpression}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

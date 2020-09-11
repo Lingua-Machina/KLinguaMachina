@@ -1,5 +1,5 @@
 package parsing.ast.nodes
 
-import parsing.ast.nodes.impl.NodePosition
+import parsing.SourcePosition
 
-abstract class ASTNode(val position: NodePosition)
+abstract class ASTNode(val position: SourcePosition)

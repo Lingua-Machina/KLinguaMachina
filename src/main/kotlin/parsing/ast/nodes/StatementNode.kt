@@ -1,7 +1,7 @@
 package parsing.ast.nodes
 
-import parsing.ast.nodes.impl.NodePosition
+import parsing.SourcePosition
 
 abstract class StatementNode(
-    position: NodePosition
+    position: SourcePosition
 ): ASTNode(position)

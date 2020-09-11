@@ -218,6 +218,16 @@ public interface LinguaMachinaListener extends ParseTreeListener {
 	 */
 	void exitFactorExpr(LinguaMachinaParser.FactorExprContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link LinguaMachinaParser#moduloExpr}.
+	 * @param ctx the parse tree
+	 */
+	void enterModuloExpr(LinguaMachinaParser.ModuloExprContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link LinguaMachinaParser#moduloExpr}.
+	 * @param ctx the parse tree
+	 */
+	void exitModuloExpr(LinguaMachinaParser.ModuloExprContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link LinguaMachinaParser#parenExpression}.
 	 * @param ctx the parse tree
 	 */

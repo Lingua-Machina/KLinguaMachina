@@ -5,6 +5,7 @@ import org.antlr.v4.runtime.CharStreams
 import org.antlr.v4.runtime.Token
 import org.antlr.v4.runtime.tree.ParseTree
 import org.antlr.v4.runtime.tree.TerminalNode
+import parsing.SourcePosition
 import parsing.ast.ASTBuilder
 import parsing.antlr.LinguaMachinaBaseVisitor
 import parsing.antlr.LinguaMachinaLexer
@@ -26,7 +27,7 @@ class AntlrASTBuilder: LinguaMachinaBaseVisitor<ASTNode>(), ASTBuilder {
 
     /********************* Utility Methods *********************/
 
-    private fun position(token: Token) = NodePosition(
+    private fun position(token: Token) = SourcePosition(
         token.line,
         token.charPositionInLine,
         token.tokenSource.sourceName
@@ -236,10 +237,20 @@ class AntlrASTBuilder: LinguaMachinaBaseVisitor<ASTNode>(), ASTBuilder {
     override fun visitFactorExpr(ctx: LinguaMachinaParser.FactorExprContext): ASTNode {
         return OperationNode(
             position(ctx.start),
-            ctx.messageExpr().map {
+            ctx.moduloExpr().map {
                 stripUnnecessaryOperation(castASTNode(visit(it)))
             },
             OperationOp.DIVIDED_BY
+        )
+    }
+
+    override fun visitModuloExpr(ctx: LinguaMachinaParser.ModuloExprContext): ASTNode {
+        return OperationNode(
+            position(ctx.start),
+            ctx.messageExpr().map {
+                castASTNode(visit(it))
+            },
+            OperationOp.MODULO
         )
     }
 

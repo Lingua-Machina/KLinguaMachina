@@ -86,7 +86,9 @@ arithExpr: termExpr (arithOp termExpr)* ;
 
 termExpr: factorExpr ('*' factorExpr)* ;
 
-factorExpr: messageExpr ('/' messageExpr)? ;
+factorExpr: moduloExpr ('/' moduloExpr)* ;
+
+moduloExpr: messageExpr ('%' messageExpr)? ;
 
 parenExpression: '(' expression ')';
 

@@ -268,6 +268,18 @@ public class LinguaMachinaBaseListener implements LinguaMachinaListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterModuloExpr(LinguaMachinaParser.ModuloExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitModuloExpr(LinguaMachinaParser.ModuloExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterParenExpression(LinguaMachinaParser.ParenExpressionContext ctx) { }
 	/**
 	 * {@inheritDoc}

@@ -3,8 +3,10 @@ package cli.repl
 import eval.Evaluator
 import parsing.ast.ASTBuilder
 
-class Repl(val evaluator: Evaluator<String>, val astBuilder: ASTBuilder) {
-
+class Repl(
+    private val evaluator: Evaluator<Unit>,
+    private val astBuilder: ASTBuilder
+) {
     private fun mustStop(input: String?) =
         input == null || input == ".exit"
 
@@ -22,7 +24,7 @@ class Repl(val evaluator: Evaluator<String>, val astBuilder: ASTBuilder) {
             print(">> ")
             input = readLine()
             if (!mustStop(input) && !input!!.isBlank()) {
-                println(evaluator.eval(input, "<repl>", astBuilder))
+                evaluator.eval(input, "<repl>", astBuilder)
             }
         } while (!mustStop(input))
     }

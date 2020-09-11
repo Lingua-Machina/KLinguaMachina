@@ -25,6 +25,10 @@
 
 **compile** <*AST node index*> : receiver -> .
 
+**and** : receiver, value -> result
+
+**or** : receiver, value -> result
+
 **add** : receiver, value -> result
 
 **minus** : receiver, value -> result
@@ -34,6 +38,18 @@
 **div** : receiver, value -> result
 
 **mod** : receiver, value -> result
+
+**eq** : receiver, value -> result
+
+**neq** : receiver, value -> result
+
+**lower** : receiver, value -> result
+
+**lower_eq** : receiver, value -> result
+
+**greater** : receiver, value -> result
+
+**greater_eq** : receiver, value -> result
 
 **neg** : receiver -> result
 

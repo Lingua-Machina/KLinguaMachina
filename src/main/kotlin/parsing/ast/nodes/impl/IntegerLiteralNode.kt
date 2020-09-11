@@ -1,9 +1,10 @@
 package parsing.ast.nodes.impl
 
+import parsing.SourcePosition
 import parsing.ast.nodes.ExpressionNode
 
 class IntegerLiteralNode(
-    position: NodePosition,
+    position: SourcePosition,
 
     val value: Int
 ): ExpressionNode(position)
