@@ -1,5 +1,10 @@
 package generation.exceptions
 
 import exceptions.KLinguaMachinaException
+import parsing.SourcePosition
 
-abstract class CompileError(msg: String): KLinguaMachinaException(msg)
+abstract class CompileError(
+    val name: String,
+    val position: SourcePosition,
+    msg: String
+): KLinguaMachinaException(msg)
