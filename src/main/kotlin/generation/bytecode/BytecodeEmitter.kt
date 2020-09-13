@@ -29,6 +29,7 @@ interface BytecodeEmitter {
     fun emitLowerEq()
     fun emitGreater()
     fun emitGreaterEq()
+    fun emitPos()
     fun emitNeg()
     fun emitNot()
 

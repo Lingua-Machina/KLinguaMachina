@@ -1,6 +1,6 @@
 package interpreter.block.impl
 
-import generation.LiteralStorage
+import generation.ConstantStorage
 import generation.VariableStorage
 import generation.bytecode.BytecodeEmitter
 import generation.bytecode.BytecodeStorage
@@ -9,8 +9,8 @@ import generation.bytecode.Bytecode.*
 import interpreter.block.Block
 
 @ExperimentalUnsignedTypes
-class CompiledBlock: Block, BytecodeEmitter, BytecodeStorage, LiteralStorage, VariableStorage {
-    override val literalMap = mutableMapOf<Any, Int>()
+class CompiledBlock: Block, BytecodeEmitter, BytecodeStorage, ConstantStorage, VariableStorage {
+    override val constantMap = mutableMapOf<Any, Int>()
     override val variableMap = mutableMapOf<String, Int>()
     override val bytecodes = mutableListOf<UInt>()
 
@@ -126,6 +126,10 @@ class CompiledBlock: Block, BytecodeEmitter, BytecodeStorage, LiteralStorage, Va
         appendBytecode(GREATER_EQ)
     }
 
+    override fun emitPos() {
+        appendBytecode(POS)
+    }
+
     override fun emitNeg() {
         appendBytecode(NEG)
     }
@@ -208,7 +212,7 @@ class CompiledBlock: Block, BytecodeEmitter, BytecodeStorage, LiteralStorage, Va
         }
 
         out += "\nliterals:\n"
-        for (entry in literalMap) {
+        for (entry in constantMap) {
             out += "${entry.value}: ${entry.key}\n"
         }
 

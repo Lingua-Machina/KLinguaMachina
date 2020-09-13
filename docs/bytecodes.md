@@ -51,6 +51,8 @@
 
 **greater_eq** : receiver, value -> result
 
+**pos** : receiver -> result
+
 **neg** : receiver -> result
 
 **not** : receiver -> result

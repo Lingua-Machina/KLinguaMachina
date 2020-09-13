@@ -33,6 +33,7 @@ enum class Bytecode(
     LOWER_EQ(0, 2),
     GREATER(0, 2),
     GREATER_EQ(0, 2),
+    POS(0, 1),
     NEG(0, 1),
     NOT(0, 1),
 
