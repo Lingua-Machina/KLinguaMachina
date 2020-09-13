@@ -1,30 +1,25 @@
 package generation.bytecode
 
-import generation.ModuleCompiler
-import generation.exceptions.UnknownVariable
 import generation.exceptions.VariableAlreadyDeclared
+import generation.Compiler
 import interpreter.block.BlockLiteralValue
 import interpreter.block.impl.*
-import interpreter.module.Module
-import interpreter.module.impl.BytecodeModule
 import parsing.ast.nodes.impl.*
 import parsing.ast.visitors.BaseASTNodeVisitor
-import java.util.*
+import java.util.LinkedList
 
 @ExperimentalUnsignedTypes
-abstract class AbstractBytecodeCompiler(
-    val module: BytecodeModule,
-    astRootNode: RootNode
-): ModuleCompiler(astRootNode), BaseASTNodeVisitor<Unit> {
-    protected val blockStack = LinkedList<CompiledBlock>()
-
-    init {
-        blockStack.push(module.mainBlock)
+abstract class AbstractBytecodeCompiler<T>(
+    protected val astRootNode: RootNode,
+    protected val blockStack: LinkedList<CompiledBlock>,
+    protected val compiledBlock: CompiledBlock
+): Compiler<T>, BaseASTNodeVisitor<Unit> {
+    fun enter() {
+        blockStack.push(compiledBlock)
     }
 
-    override fun compile(): Module {
-        visit(astRootNode)
-        return module
+    fun exit() {
+        blockStack.pop()
     }
 
     protected fun addVariable(name: String): Int {
@@ -48,6 +43,9 @@ abstract class AbstractBytecodeCompiler(
                 else -> "$it:"
             }
         })
+
+    abstract fun CompiledBlock.emitVariableResolve(node: IdentifierNode)
+    abstract fun CompiledBlock.emitVariableAssign(node: VarAssignmentNode)
 
     override fun defaultValue() = Unit
 
@@ -91,14 +89,7 @@ abstract class AbstractBytecodeCompiler(
                 "true"        -> it.emitTrue()
                 "false"       -> it.emitFalse()
                 "nil"         -> it.emitNil()
-                else          -> {
-                    val variableIndex = getVariable(node.value)
-                    // TODO check in global pool
-                    if (variableIndex == null) {
-                        throw UnknownVariable(node.value, node.position)
-                    }
-                    it.emitGetLocal(variableIndex)
-                }
+                else          -> it.emitVariableResolve(node)
             }
         }
     }
@@ -171,14 +162,7 @@ abstract class AbstractBytecodeCompiler(
     }
 
     override fun visit(node: VarAssignmentNode) {
-        val variableIndex = getVariable(node.name)
-        // TODO check for global variable
-        if (variableIndex != null) {
-            visit(node.value)
-            blockStack.last.emitSetLocal(variableIndex)
-        } else {
-            throw UnknownVariable(node.name, node.position)
-        }
+        blockStack.last.emitVariableAssign(node)
     }
 
     override fun visit(node: VarDeclarationNode) {
