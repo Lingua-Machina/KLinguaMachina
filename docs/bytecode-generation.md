@@ -58,6 +58,8 @@ frame variables:
 
 > If the result of a message sent is not used a **pop** byte code is
 > generated so that it disappears from the stack.
+> The **pop** bytecode is not emitted if the statement is the last of
+> statement of a block.
 
 ### Message chaining
 ```
@@ -139,8 +141,6 @@ registered blocks AST node:
 ```
 const 0
 send 1
-pop
-nil
 non_local_return
 
 frame constants:
