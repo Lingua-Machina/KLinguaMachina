@@ -3,4 +3,6 @@ package interpreter.block.impl
 import interpreter.block.BlockLiteralValue
 
 @ExperimentalUnsignedTypes
-class CompiledBlockConstant(value: CompiledBlock): BlockLiteralValue(value)
+class CompiledBlockConstant(val value: CompiledBlock): BlockLiteralValue {
+    override fun toString() = "compiled block"
+}
