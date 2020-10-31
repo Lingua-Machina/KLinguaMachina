@@ -5,8 +5,9 @@ import generation.bytecode.impl.ModuleBytecodeCompiler
 import interpreter.context.InterpreterContext
 import interpreter.module.impl.BytecodeModule
 import parsing.ast.ASTBuilder
+import parsing.ast.applyASTTransformations
 import parsing.ast.nodes.impl.RootNode
-import parsing.ast.nodes.validateAST
+import parsing.ast.validateAST
 
 @ExperimentalUnsignedTypes
 open class BytecodeEvaluator(
@@ -27,6 +28,7 @@ open class BytecodeEvaluator(
 
     private fun evalSourceCode(sourceCode: String) {
         val ast = astBuilder.build(sourceCode, bytecodeModule.sourceName)
+        applyASTTransformations(ast)
         validateAST(ast)
         onParseAction(ast)
         ModuleBytecodeCompiler(

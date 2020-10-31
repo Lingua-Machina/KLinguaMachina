@@ -8,5 +8,5 @@ class BlockLiteralNode(
     position: SourcePosition,
 
     val paramNames: List<String>,
-    val statements: List<StatementNode>
+    var statements: List<StatementNode>
 ): ExpressionNode(position)

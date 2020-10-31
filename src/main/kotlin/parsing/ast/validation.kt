@@ -1,4 +1,4 @@
-package parsing.ast.nodes
+package parsing.ast
 
 import parsing.ast.nodes.impl.RootNode
 import parsing.ast.visitors.impl.ValidateAssignments

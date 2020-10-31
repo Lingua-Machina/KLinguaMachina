@@ -33,10 +33,10 @@ internal class ModuleBytecodeCompilerPrimitiveBindingTest {
             bytecodeModule)
 
         assertThrows<UnregisteredPrimitive> {
-            // TODO remove 'Object := 1337 class' stub and class definition syntactic sugar
+            // TODO remove 'Object := 1337 class' stub
             bytecodeEvaluator.eval("""
                 Object := 1337 class;
-                Test := Object subclass: 'Test instanceVars: [];
+                Object subclass: 'Test instanceVars: [];
                 
                 Test :: primitive = '$PRIMITIVE_NAME
             """.trimIndent())
@@ -56,10 +56,10 @@ internal class ModuleBytecodeCompilerPrimitiveBindingTest {
             PrimitiveBlock(PRIMITIVE_NAME, 1337))
 
         assertThrows<PrimitiveBindingBadArity> {
-            // TODO remove 'Object := 1337 class' stub and class definition syntactic sugar
+            // TODO remove 'Object := 1337 class' stub
             bytecodeEvaluator.eval("""
                 Object := 1337 class;
-                Test := Object subclass: 'Test instanceVars: [];
+                Object subclass: 'Test instanceVars: [];
                 
                 Test :: primitive = '$PRIMITIVE_NAME
             """.trimIndent())
@@ -78,10 +78,10 @@ internal class ModuleBytecodeCompilerPrimitiveBindingTest {
         fakeInterpreterContext.primitiveRegistry.registerPrimitive(PRIMITIVE_NAME,
             PrimitiveBlock(PRIMITIVE_NAME, 0))
 
-        // TODO remove 'Object := 1337 class' stub and class definition syntactic sugar
+        // TODO remove 'Object := 1337 class' stub
         bytecodeEvaluator.eval("""
             Object := 1337 class;
-            Test := Object subclass: 'Test instanceVars: [];
+            Object subclass: 'Test instanceVars: [];
             
             Test :: primitive = '$PRIMITIVE_NAME
         """.trimIndent())

@@ -7,5 +7,5 @@ import parsing.ast.nodes.StatementNode
 class RootNode(
     position: SourcePosition,
 
-    val statements: List<StatementNode>
+    var statements: List<StatementNode>
 ): ASTNode(position)
