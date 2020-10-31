@@ -2,7 +2,7 @@ package generation.exceptions
 
 import parsing.SourcePosition
 
-class UnknownVariable(
+class UnregisteredPrimitive(
     val name: String,
     position: SourcePosition
-): CompileError(position, "$position: Variable '$name' is not declared")
+): CompileError(position, "$position: Unregistered primitive '$name")

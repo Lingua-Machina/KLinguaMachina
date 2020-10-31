@@ -167,37 +167,35 @@ frame variables:
 ## Blocks and methods exit
 A **non_local_return** must appear at the end of each method, and
 a **return** must appear at the end of each block.
-If no explicit return has been written then a *nil* value must be
-pushed on the stack beforehand.
 
 ## Examples
 ```
-{< i != 1337 } whileTrue: {
+{ i != 1337 } whileTrue: {
     i = i + 1;
     "Helloworld!" printNewLine
 }
 ```
 ```
-block 0:
-    get_local 0
-    const_int 1337
-    neq
-    return
+get_local 0
+closure 1 0 6
+get_local 0
+const_int 1337
+neq
+return
 
-block 1:
-    get_local 0
-    const_int 1
-    add
-    set_local 0
-    const 0
-    send 1
-    pop
-    nil
-    return
+create_ref 0
+closure 1 0 14
+get_ref 0
+const_int 1
+add
+set_ref 0
+const 0
+send 1
+pop
+nil
+return
 
-block 2:
-    const 0
-    const 1
-    send 2
-    pop
+send 2
+pop
 ```
+

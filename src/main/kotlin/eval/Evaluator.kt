@@ -1,7 +1,13 @@
 package eval
 
+import interpreter.module.Module
 import parsing.ast.ASTBuilder
 
-interface Evaluator<T> {
-    fun eval(input: String, sourceName: String, astBuilder: ASTBuilder): T
+abstract class Evaluator<T>(
+    val evaluationContext: EvaluationContext,
+    val astBuilder: ASTBuilder,
+    val module: Module
+) {
+    abstract fun eval(): T
+    abstract fun eval(input: String): T
 }

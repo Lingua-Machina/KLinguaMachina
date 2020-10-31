@@ -17,9 +17,15 @@ enum class Bytecode(
     SET_CLASS(1, 1, 0),
     SET_LOCAL(1, 1, 0),
 
+    // Refs
+    CREATE_REF(1, 0, 1),
+    GET_REF(1, 0, 1),
+    SET_REF(1, 1, 0),
+
     // Message sending
     SEND(1, Int.MAX_VALUE),
     COMPILE(1, 0, 0),
+    BIND_PRIMITIVE(2, 1, 0),
     AND(0, 2),
     OR(0, 2),
     ADD(0, 2),
@@ -48,6 +54,7 @@ enum class Bytecode(
     CONST_INT(1, 0),
 
     // Blocks
+    CLOSURE(3, Int.MAX_VALUE),
     RETURN(0, 1, 0),
     NON_LOCAL_RETURN(0, 1, 0),
 

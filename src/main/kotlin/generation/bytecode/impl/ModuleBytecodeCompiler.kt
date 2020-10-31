@@ -1,46 +1,35 @@
 package generation.bytecode.impl
 
-import generation.bytecode.AbstractBytecodeCompiler
-import generation.exceptions.UnknownVariable
-import interpreter.block.impl.CompiledBlock
+import generation.impl.GlobalScope
+import generation.impl.ModuleScope
 import interpreter.module.Module
 import interpreter.module.impl.BytecodeModule
-import parsing.ast.nodes.impl.IdentifierNode
+import interpreter.primitive.PrimitiveRegistry
 import parsing.ast.nodes.impl.RootNode
-import parsing.ast.nodes.impl.VarAssignmentNode
-import java.util.LinkedList
 
 @ExperimentalUnsignedTypes
 class ModuleBytecodeCompiler(
     private val module: BytecodeModule,
-    astRootNode: RootNode
+    astRootNode: RootNode,
+    primitiveRegistry: PrimitiveRegistry
 ): AbstractBytecodeCompiler<Module>(
-        astRootNode, LinkedList<CompiledBlock>(), module.mainBlock) {
+        astRootNode, GlobalScope(), module.mainBlock, primitiveRegistry) {
+
+    private val moduleScope = ModuleScope()
 
     override fun compile(): Module {
-        enter()
-        visit(astRootNode)
-        exit()
+        enterScope(moduleScope)
+        visit(astRootNode as RootNode)
+        leaveScope()
+
+        addVariablesToCompiledBlock()
+
         return module
     }
 
-    override fun CompiledBlock.emitVariableResolve(node: IdentifierNode) {
-        val variableIndex = getVariable(node.value)
-        // TODO check in global pool
-        if (variableIndex == null) {
-            throw UnknownVariable(node.value, node.position)
-        }
-        this.emitGetLocal(variableIndex)
-    }
-
-    override fun CompiledBlock.emitVariableAssign(node: VarAssignmentNode) {
-        val variableIndex = getVariable(node.name)
-        // TODO check in global pool
-        if (variableIndex != null) {
-            visit(node.value)
-            blockStack.last.emitSetLocal(variableIndex)
-        } else {
-            throw UnknownVariable(node.name, node.position)
+    private fun addVariablesToCompiledBlock() {
+        moduleScope.variables.forEach {
+            module.mainBlock.variables.add(it.name)
         }
     }
 }

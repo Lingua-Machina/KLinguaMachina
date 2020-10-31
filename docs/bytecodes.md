@@ -20,10 +20,19 @@
 
 **set_local** <*local variable index*> : value -> . 
 
+### Refs
+**create_ref** <*local variable index*> : . -> ref
+
+**get_ref** <*local variable index*> : . -> value
+
+**set_ref** <*local variable index*> : value -> .
+
 ## Message sending
 **send** <*selector index*> : receiver, arg1, arg2, ..., argN -> result
 
 **compile** <*AST node index*> : receiver -> .
+
+**bind_primitive** <*selector index*> <*primitive name index*> : receiver -> .
 
 **and** : receiver, value -> result
 
@@ -75,6 +84,8 @@
 **const_int** <*immediate_integer*> : . -> value
 
 ## Blocks
+**closure** <*copied variables count*> <*args count*> <*length*> : copiedValue1, ..., copiedValueN -> closure
+
 **return** : value -> .
 - Push the *value* on the caller stack
 

@@ -3,6 +3,6 @@ package generation.exceptions
 import parsing.SourcePosition
 
 class VariableAlreadyDeclared(
-    name: String,
+    val name: String,
     position: SourcePosition
-): CompileError(name, position, "$position: Variable '$name' is already declared in this scope")
+): CompileError(position, "$position: Variable '$name' is already declared in this scope")

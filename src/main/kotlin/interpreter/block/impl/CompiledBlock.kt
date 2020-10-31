@@ -1,17 +1,20 @@
 package interpreter.block.impl
 
-import generation.ConstantStorage
-import generation.VariableStorage
+import generation.IndexedSet
 import generation.bytecode.BytecodeEmitter
 import generation.bytecode.BytecodeStorage
 import generation.bytecode.Bytecode
 import generation.bytecode.Bytecode.*
+import generation.impl.BaseIndexedSet
 import interpreter.block.Block
+import interpreter.block.BlockLiteralValue
 
 @ExperimentalUnsignedTypes
-class CompiledBlock: Block, BytecodeEmitter, BytecodeStorage, ConstantStorage, VariableStorage {
-    override val constantMap = mutableMapOf<Any, Int>()
-    override val variableMap = mutableMapOf<String, Int>()
+class CompiledBlock(
+    arity: Int
+): Block(arity), BytecodeEmitter, BytecodeStorage {
+    val constants: IndexedSet<BlockLiteralValue> = BaseIndexedSet()
+    val variables: IndexedSet<String> = BaseIndexedSet()
     override val bytecodes = mutableListOf<UInt>()
 
     private fun appendBytecode(bytecode: Bytecode) {
@@ -64,6 +67,21 @@ class CompiledBlock: Block, BytecodeEmitter, BytecodeStorage, ConstantStorage, V
         appendImmediate(variableIndex)
     }
 
+    override fun emitCreateRef(variableIndex: Int) {
+        appendBytecode(CREATE_REF)
+        appendImmediate(variableIndex)
+    }
+
+    override fun emitGetRef(variableIndex: Int) {
+        appendBytecode(GET_REF)
+        appendImmediate(variableIndex)
+    }
+
+    override fun emitSetRef(variableIndex: Int) {
+        appendBytecode(SET_REF)
+        appendImmediate(variableIndex)
+    }
+
     override fun emitSend(selectorIndex: Int) {
         appendBytecode(SEND)
         appendImmediate(selectorIndex)
@@ -72,6 +90,12 @@ class CompiledBlock: Block, BytecodeEmitter, BytecodeStorage, ConstantStorage, V
     override fun emitCompile(astNodeIndex: Int) {
         appendBytecode(COMPILE)
         appendImmediate(astNodeIndex)
+    }
+
+    override fun emitBindPrimitive(selectorIndex: Int, primitiveNameIndex: Int) {
+        appendBytecode(BIND_PRIMITIVE)
+        appendImmediate(selectorIndex)
+        appendImmediate(primitiveNameIndex)
     }
 
     override fun emitAnd() {
@@ -173,6 +197,13 @@ class CompiledBlock: Block, BytecodeEmitter, BytecodeStorage, ConstantStorage, V
         appendImmediate(immediateValue)
     }
 
+    override fun closure(copiedVariableCount: Int, argsCount: Int, length: Int) {
+        appendBytecode(CLOSURE)
+        appendImmediate(copiedVariableCount)
+        appendImmediate(argsCount)
+        appendImmediate(length)
+    }
+
     override fun emitReturn() {
         appendBytecode(RETURN)
     }
@@ -212,12 +243,12 @@ class CompiledBlock: Block, BytecodeEmitter, BytecodeStorage, ConstantStorage, V
         }
 
         out += "\nliterals:\n"
-        for (entry in constantMap) {
+        for (entry in constants.entries) {
             out += "${entry.value}: ${entry.key}\n"
         }
 
         out += "\nvariables:\n"
-        for (entry in variableMap) {
+        for (entry in variables.entries) {
             out += "${entry.value}: ${entry.key}\n"
         }
 

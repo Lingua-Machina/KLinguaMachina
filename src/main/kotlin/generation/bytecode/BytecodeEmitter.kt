@@ -13,9 +13,15 @@ interface BytecodeEmitter {
     fun emitSetClass(variableIndex: Int)
     fun emitSetLocal(variableIndex: Int)
 
+    // Refs
+    fun emitCreateRef(variableIndex: Int)
+    fun emitGetRef(variableIndex: Int)
+    fun emitSetRef(variableIndex: Int)
+
     // Message sending
     fun emitSend(selectorIndex: Int)
     fun emitCompile(astNodeIndex: Int)
+    fun emitBindPrimitive(selectorIndex: Int, primitiveNameIndex: Int)
     fun emitAnd()
     fun emitOr()
     fun emitAdd()
@@ -44,6 +50,7 @@ interface BytecodeEmitter {
     fun emitConstInt(immediateValue: Int)
 
     // Blocks
+    fun closure(copiedVariableCount: Int, argsCount: Int, length: Int)
     fun emitReturn()
     fun emitNonLocalReturn()
 

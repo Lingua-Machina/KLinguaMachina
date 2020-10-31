@@ -1,11 +1,11 @@
 package cli.repl
 
 import eval.Evaluator
-import parsing.ast.ASTBuilder
+import exceptions.KLinguaMachinaException
+import util.stackTraceString
 
 class Repl(
-    private val evaluator: Evaluator<Unit>,
-    private val astBuilder: ASTBuilder
+    private val evaluator: Evaluator<Unit>
 ) {
     private fun mustStop(input: String?) =
         input == null || input == ".exit"
@@ -24,7 +24,13 @@ class Repl(
             print(">> ")
             input = readLine()
             if (!mustStop(input) && !input!!.isBlank()) {
-                evaluator.eval(input, "<repl>", astBuilder)
+                try {
+                    evaluator.eval(input)
+                } catch (e: KLinguaMachinaException) {
+                    println(e.localizedMessage)
+                } catch (e: Exception) {
+                    println(e.stackTraceString())
+                }
             }
         } while (!mustStop(input))
     }

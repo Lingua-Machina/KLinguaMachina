@@ -1,3 +1,5 @@
 package interpreter.block
 
-interface Block
+abstract class Block(
+    val arity: Int
+)
