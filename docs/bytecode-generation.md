@@ -1,4 +1,4 @@
-# Byte codes generation
+# Byte codes org.linguamachina.klinguamachina.generation
 
 ## Assignment
 ```

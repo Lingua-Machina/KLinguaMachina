@@ -4,7 +4,7 @@ plugins {
     distribution
 }
 
-group = "org.lingua-machina.klingua-machina"
+group = "org.linguamachina.klinguamachina"
 version = "1.0-SNAPSHOT"
 
 repositories {
@@ -12,7 +12,7 @@ repositories {
 }
 
 application {
-    mainClassName = "cli.MainKt"
+    mainClassName = "org.linguamachina.klinguamachina.cli.MainKt"
 }
 
 dependencies {

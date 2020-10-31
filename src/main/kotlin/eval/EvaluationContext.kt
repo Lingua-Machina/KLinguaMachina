@@ -1,3 +1,0 @@
-package eval
-
-interface EvaluationContext

@@ -24,5 +24,5 @@ extend already existing ones.
 
 ### Run Stop Hooks
 
-In order to free acquired resources during startup or interpreter, stop hooks can be registered and will be executed
+In order to free acquired resources during startup or org.linguamachina.klinguamachina.interpreter, stop hooks can be registered and will be executed
 when the VM is shutting down.
