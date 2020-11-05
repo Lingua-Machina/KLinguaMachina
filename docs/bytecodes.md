@@ -3,7 +3,11 @@
 ## Data access
 
 ### Read data
-**get_pool** <*variable index*> <*pool index*> : . -> value
+**get_global** <*global variable index*> : . -> value
+
+**get_module** <*module variable index*> : . -> value
+
+**get_module** <*module variable index*> : . -> value
 
 **get_instance** <*instance variable index*> : . -> value
 
@@ -12,7 +16,9 @@
 **get_local** <*local variable index*> : . -> value
 
 ### Write data
-**set_pool** <*variable index*> <*pool index*> : value -> .
+**set_global** <*global variable index*> : value -> . 
+
+**set_module** <*module variable index*> : value -> . 
 
 **set_instance** <*instance variable index*> : value -> . 
 

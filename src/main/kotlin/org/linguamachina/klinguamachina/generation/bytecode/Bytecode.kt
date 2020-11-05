@@ -6,13 +6,15 @@ enum class Bytecode(
     val stackResultCount: Int = 1
 ) {
     // Data read
-    GET_POOL(2, 0),
+    GET_GLOBAL(1, 0),
+    GET_MODULE(1, 0),
     GET_INSTANCE(1, 0),
     GET_CLASS(1, 0),
     GET_LOCAL(1, 0),
 
     // Data write
-    SET_POOL(2, 1, 0),
+    SET_GLOBAL(1, 1, 0),
+    SET_MODULE(1, 1, 0),
     SET_INSTANCE(1, 1, 0),
     SET_CLASS(1, 1, 0),
     SET_LOCAL(1, 1, 0),

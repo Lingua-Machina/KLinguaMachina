@@ -2,13 +2,15 @@ package org.linguamachina.klinguamachina.generation.bytecode
 
 interface BytecodeEmitter {
     // Data read
-    fun emitGetPool(variableIndex: Int, poolIndex: Int)
+    fun emitGetGlobal(variableIndex: Int)
+    fun emitGetModule(variableIndex: Int)
     fun emitGetInstance(variableIndex: Int)
     fun emitGetClass(variableIndex: Int)
     fun emitGetLocal(variableIndex: Int)
 
     // Data write
-    fun emitSetPool(variableIndex: Int, poolIndex: Int)
+    fun emitSetGlobal(variableIndex: Int)
+    fun emitSetModule(variableIndex: Int)
     fun emitSetInstance(variableIndex: Int)
     fun emitSetClass(variableIndex: Int)
     fun emitSetLocal(variableIndex: Int)

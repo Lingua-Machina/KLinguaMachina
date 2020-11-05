@@ -9,6 +9,7 @@ import org.linguamachina.klinguamachina.parsing.ast.applyASTTransformations
 import org.linguamachina.klinguamachina.parsing.ast.nodes.impl.RootNode
 import org.linguamachina.klinguamachina.parsing.ast.validateAST
 
+@ExperimentalStdlibApi
 @ExperimentalUnsignedTypes
 open class BytecodeEvaluator(
     val interpreterContext: InterpreterContext,

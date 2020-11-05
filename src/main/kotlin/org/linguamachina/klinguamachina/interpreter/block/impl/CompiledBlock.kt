@@ -16,6 +16,8 @@ class CompiledBlock(
     val constants: IndexedSet<BlockLiteralValue> = BaseIndexedSet()
     val variables: IndexedSet<String> = BaseIndexedSet()
     override val bytecodes = mutableListOf<UInt>()
+    var hasModuleReturn = false
+        private set
 
     private fun appendBytecode(bytecode: Bytecode) {
         bytecodes += bytecode.ordinal.toUInt()
@@ -25,10 +27,41 @@ class CompiledBlock(
         bytecodes += immediateValue.toUInt()
     }
 
-    override fun emitGetPool(variableIndex: Int, poolIndex: Int) {
-        appendBytecode(GET_POOL)
+    fun addModuleReturn() {
+        if (!hasModuleReturn) {
+            hasModuleReturn = true
+            emitNil()
+            emitReturn()
+        }
+    }
+
+    fun addNonLocalModuleReturn() {
+        if (!hasModuleReturn) {
+            hasModuleReturn = true
+            emitNil()
+            emitNonLocalReturn()
+        }
+    }
+
+    @ExperimentalStdlibApi
+    fun removeModuleReturns() {
+        if (hasModuleReturn && bytecodes.isNotEmpty()) {
+            hasModuleReturn = false
+            // Remove the 'return' or 'non_local_return' bytecode
+            bytecodes.removeLast()
+            // Remove the 'nil' bytecode
+            bytecodes.removeLast()
+        }
+    }
+
+    override fun emitGetGlobal(variableIndex: Int) {
+        appendBytecode(GET_GLOBAL)
         appendImmediate(variableIndex)
-        appendImmediate(poolIndex)
+    }
+
+    override fun emitGetModule(variableIndex: Int) {
+        appendBytecode(GET_MODULE)
+        appendImmediate(variableIndex)
     }
 
     override fun emitGetInstance(variableIndex: Int) {
@@ -46,10 +79,14 @@ class CompiledBlock(
         appendImmediate(variableIndex)
     }
 
-    override fun emitSetPool(variableIndex: Int, poolIndex: Int) {
-        appendBytecode(SET_POOL)
+    override fun emitSetGlobal(variableIndex: Int) {
+        appendBytecode(SET_GLOBAL)
         appendImmediate(variableIndex)
-        appendImmediate(poolIndex)
+    }
+
+    override fun emitSetModule(variableIndex: Int) {
+        appendBytecode(SET_MODULE)
+        appendImmediate(variableIndex)
     }
 
     override fun emitSetInstance(variableIndex: Int) {

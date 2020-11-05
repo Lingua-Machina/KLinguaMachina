@@ -9,14 +9,16 @@ data class Variable(
     val index: Int,
     val scope: Scope
 ) {
-    fun emitGetVariable(bytecodeEmitter: BytecodeEmitter) {
+    fun emitGetVariable(bytecodeEmitter: BytecodeEmitter, thisScope: Scope) {
         if (isRef) {
             bytecodeEmitter.emitGetRef(index)
         } else {
             when (scope) {
-                is GlobalScope   -> TODO("Emit get_global")
-                // TODO emit get_module when we are in a child scope
-                is ModuleScope   -> bytecodeEmitter.emitGetLocal(index)
+                is GlobalScope   -> bytecodeEmitter.emitGetGlobal(index)
+                is ModuleScope   -> if (scope == thisScope)
+                                        bytecodeEmitter.emitGetLocal(index)
+                                    else
+                                        bytecodeEmitter.emitGetModule(index)
                 is BlockScope    -> bytecodeEmitter.emitGetLocal(index)
                 is ClassScope    -> bytecodeEmitter.emitGetClass(index)
                 is InstanceScope -> bytecodeEmitter.emitGetInstance(index)
@@ -24,14 +26,16 @@ data class Variable(
         }
     }
 
-    fun emitSetVariable(bytecodeEmitter: BytecodeEmitter) {
+    fun emitSetVariable(bytecodeEmitter: BytecodeEmitter, thisScope: Scope) {
         if (isRef) {
             bytecodeEmitter.emitSetRef(index)
         } else {
             when (scope) {
-                is GlobalScope   -> TODO("emit set_global")
-                // TODO emit set_module when we are in a child scope
-                is ModuleScope   -> bytecodeEmitter.emitSetLocal(index)
+                is GlobalScope   -> bytecodeEmitter.emitSetGlobal(index)
+                is ModuleScope   -> if (scope == thisScope)
+                                        bytecodeEmitter.emitSetLocal(index)
+                                    else
+                                        bytecodeEmitter.emitSetModule(index)
                 is BlockScope    -> bytecodeEmitter.emitSetLocal(index)
                 is ClassScope    -> bytecodeEmitter.emitSetClass(index)
                 is InstanceScope -> bytecodeEmitter.emitSetInstance(index)

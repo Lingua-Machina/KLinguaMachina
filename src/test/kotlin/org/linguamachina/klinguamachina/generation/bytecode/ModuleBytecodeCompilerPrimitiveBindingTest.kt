@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.linguamachina.klinguamachina.parsing.ast.antlr.AntlrASTBuilder
 
+@ExperimentalStdlibApi
 @ExperimentalUnsignedTypes
 internal class ModuleBytecodeCompilerPrimitiveBindingTest {
     private var TEST_ID = 0

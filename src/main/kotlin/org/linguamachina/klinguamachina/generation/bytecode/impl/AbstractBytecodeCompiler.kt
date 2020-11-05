@@ -3,6 +3,7 @@ package org.linguamachina.klinguamachina.generation.bytecode.impl
 import org.linguamachina.klinguamachina.generation.exceptions.VariableAlreadyDeclared
 import org.linguamachina.klinguamachina.generation.Compiler
 import org.linguamachina.klinguamachina.generation.Scope
+import org.linguamachina.klinguamachina.generation.bytecode.Bytecode
 import org.linguamachina.klinguamachina.generation.exceptions.PrimitiveBindingBadArity
 import org.linguamachina.klinguamachina.generation.exceptions.UnknownVariable
 import org.linguamachina.klinguamachina.generation.exceptions.UnregisteredPrimitive
@@ -86,8 +87,9 @@ abstract class AbstractBytecodeCompiler<T>(
     }
 
     override fun visit(node: StatementExprNode) {
-        // TODO emit a 'pop' except for last expr in block
+        // TODO don't emit a 'pop' after the last expr in block
         super.visit(node)
+        compiledBlock.emitPop()
     }
 
     override fun visit(node: DoubleLiteralNode) {
@@ -194,7 +196,7 @@ abstract class AbstractBytecodeCompiler<T>(
         if (currentScope.hasVariable(node.value)
                 || currentScope.hasVariableInOuterScopes(node.value)) {
             val variable = currentScope.getVariable(node.value)
-            variable.emitGetVariable(compiledBlock)
+            variable.emitGetVariable(compiledBlock, currentScope)
         } else {
             throw UnknownVariable(node.value, node.position)
         }
@@ -205,7 +207,7 @@ abstract class AbstractBytecodeCompiler<T>(
                 || currentScope.hasVariableInOuterScopes(node.name)) {
             val variable = currentScope.getVariable(node.name)
             visit(node.value)
-            variable.emitSetVariable(compiledBlock)
+            variable.emitSetVariable(compiledBlock, currentScope)
         } else {
             throw UnknownVariable(node.name, node.position)
         }

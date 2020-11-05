@@ -7,6 +7,7 @@ import org.linguamachina.klinguamachina.interpreter.module.impl.BytecodeModule
 import org.linguamachina.klinguamachina.interpreter.primitive.PrimitiveRegistry
 import org.linguamachina.klinguamachina.parsing.ast.nodes.impl.RootNode
 
+@ExperimentalStdlibApi
 @ExperimentalUnsignedTypes
 class ModuleBytecodeCompiler(
     private val module: BytecodeModule,
@@ -25,6 +26,14 @@ class ModuleBytecodeCompiler(
         addVariablesToCompiledBlock()
 
         return module
+    }
+
+    override fun visit(node: RootNode) {
+        // Remove module returns in case we append code to an already existing one
+        compiledBlock.removeModuleReturns()
+        super.visit(node)
+        // A module returns nothing
+        compiledBlock.addNonLocalModuleReturn()
     }
 
     private fun addVariablesToCompiledBlock() {
