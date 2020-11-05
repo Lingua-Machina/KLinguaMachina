@@ -8,8 +8,6 @@ fragment Digit: [0-9] ;
 
 fragment Ident: [a-zA-Z_][a-zA-Z0-9_]* ;
 
-BlockLiteralParam: ':' Ident;
-
 IntegerLiteral: Digit+ ;
 
 DoubleLiteral:
@@ -57,7 +55,7 @@ identifier: Identifier;
 
 arrayLiteral: '[' (expression (',' expression)*)? ']';
 
-blockLiteral: '{' (params+=BlockLiteralParam+ '|')? blockStatements? '}';
+blockLiteral: '{' ('|' params+=Identifier+ '|')? blockStatements? '}';
 
 literal:
       integerLiteral

@@ -124,7 +124,7 @@ class AntlrASTBuilder: LinguaMachinaBaseVisitor<ASTNode>(), ASTBuilder {
     override fun visitBlockLiteral(ctx: LinguaMachinaParser.BlockLiteralContext): ASTNode {
         return BlockLiteralNode(
             position(ctx.start),
-            ctx.params.map { it.text.substring(1) },
+            ctx.params.map { it.text },
             ctx.blockStatements()?.blockStatement()
                 ?.map { castASTNode(visit(it)) }
                 ?: emptyList()

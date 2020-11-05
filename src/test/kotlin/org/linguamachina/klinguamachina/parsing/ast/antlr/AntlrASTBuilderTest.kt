@@ -97,7 +97,7 @@ internal class AntlrASTBuilderTest {
     @Test
     fun `parse block literal with params`() {
         // GIVEN a block literal with params
-        val input = "{ :yeet :nice | ^yeet + nice }"
+        val input = "{ | yeet nice | ^yeet + nice }"
 
         // WHEN org.linguamachina.klinguamachina.parsing the input
         AntlrASTBuilder().build(input, "<test>")
