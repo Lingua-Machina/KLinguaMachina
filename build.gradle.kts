@@ -1,5 +1,5 @@
 plugins {
-    kotlin("jvm") version "1.3.72"
+    kotlin("jvm") version "1.4.20-RC"
     application
     distribution
 }
@@ -12,7 +12,7 @@ repositories {
 }
 
 application {
-    mainClassName = "org.linguamachina.klinguamachina.cli.MainKt"
+    mainClass.set("org.linguamachina.klinguamachina.cli.MainKt")
 }
 
 dependencies {
@@ -33,10 +33,10 @@ tasks {
     }
     compileKotlin {
         kotlinOptions.jvmTarget = "1.8"
-        kotlinOptions.freeCompilerArgs += "-XXLanguage:+NewInference"
+        kotlinOptions.freeCompilerArgs += "-Xopt-in=kotlin.RequiresOptIn"
     }
     compileTestKotlin {
         kotlinOptions.jvmTarget = "1.8"
-        kotlinOptions.freeCompilerArgs += "-XXLanguage:+NewInference"
+        kotlinOptions.freeCompilerArgs += "-Xopt-in=kotlin.RequiresOptIn"
     }
 }
