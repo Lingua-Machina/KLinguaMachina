@@ -233,11 +233,15 @@ class CompiledBlock(
         appendImmediate(immediateValue)
     }
 
-    override fun closure(copiedVariableCount: Int, argsCount: Int, length: Int) {
+    override fun emitClosure(copiedVariableCount: Int, argsCount: Int,
+                             closureBodyEmitter: () -> Unit) {
         appendBytecode(CLOSURE)
         appendImmediate(copiedVariableCount)
         appendImmediate(argsCount)
-        appendImmediate(length)
+        val lengthBackpatchIndex = bytecodes.size
+        appendImmediate(0) // Stub
+        closureBodyEmitter()
+        bytecodes[lengthBackpatchIndex] = (bytecodes.size - (lengthBackpatchIndex + 1)).toUInt()
     }
 
     override fun emitReturn() {

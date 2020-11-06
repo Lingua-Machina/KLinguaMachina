@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.linguamachina.klinguamachina.parsing.ast.antlr.AntlrASTBuilder
 
-internal class ModuleBytecodeCompilerPrimitiveBindingTest {
+internal class PrimitiveBindingTest {
     private var TEST_ID = 0
         get() = ++field
 

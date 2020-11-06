@@ -4,9 +4,11 @@ import org.linguamachina.klinguamachina.generation.exceptions.VariableAlreadyDec
 import org.linguamachina.klinguamachina.generation.Compiler
 import org.linguamachina.klinguamachina.generation.Scope
 import org.linguamachina.klinguamachina.generation.bytecode.Bytecode
+import org.linguamachina.klinguamachina.generation.closure.ClosureVariablesUsageAnalysis
 import org.linguamachina.klinguamachina.generation.exceptions.PrimitiveBindingBadArity
 import org.linguamachina.klinguamachina.generation.exceptions.UnknownVariable
 import org.linguamachina.klinguamachina.generation.exceptions.UnregisteredPrimitive
+import org.linguamachina.klinguamachina.generation.impl.BlockScope
 import org.linguamachina.klinguamachina.interpreter.block.BlockLiteralValue
 import org.linguamachina.klinguamachina.interpreter.block.impl.*
 import org.linguamachina.klinguamachina.interpreter.primitive.PrimitiveRegistry
@@ -48,13 +50,64 @@ abstract class AbstractBytecodeCompiler<T>(
 
     override fun defaultValue() = Unit
 
-    override fun visit(node: ArrayLiteralNode) {
-        super.visit(node)
-        compiledBlock.emitArray(node.items.size)
+    private fun createBlockScope(copies: List<String>, copiedRefs: List<String>,
+                                 refs: List<String>, params: List<String>): BlockScope {
+        val blockScope = BlockScope()
+        // Parameters are added first (they will be the first local variables)
+        params.forEach {
+            blockScope.addVariable(it)
+        }
+        // Copied variables are added and pushed first on the stack
+        copies.forEach {
+            blockScope.addVariable(it)
+            currentScope.getVariable(it).emitGetVariable(compiledBlock, currentScope)
+        }
+        // Copied references are added and pushed on the stack as values
+        copiedRefs.forEach {
+            val index = blockScope.addVariableRef(it)
+            // refs are always in current block
+            compiledBlock.emitGetLocal(index)
+        }
+        // Finally the references
+        refs.forEach {
+            blockScope.addVariableRef(it)
+            // refs are always in current block
+            compiledBlock.emitCreateRef(currentScope.getVariable(it).index)
+        }
+
+        return blockScope
     }
 
     override fun visit(node: BlockLiteralNode) {
-        TODO("Implement block compilation")
+        val (copies, copiedRefs, refs) = ClosureVariablesUsageAnalysis(currentScope).analyse(node)
+        val blockScope = createBlockScope(copies, copiedRefs, refs, node.paramNames)
+
+        enterScope(blockScope)
+
+        compiledBlock.emitClosure(copies.size + copiedRefs.size + refs.size, node.paramNames.size) {
+            super.visit(node)
+            if (node.statements.isNotEmpty()) {
+                when (node.statements.last()) {
+                    is StatementExprNode -> {
+                        if (compiledBlock.bytecodes.last() == Bytecode.POP.ordinal.toUInt()) {
+                            compiledBlock.bytecodes.removeLast()
+                        }
+                        compiledBlock.emitReturn()
+                    }
+                    !is NonLocalReturnNode, !is LocalReturnNode -> {
+                        compiledBlock.emitNil()
+                        compiledBlock.emitReturn()
+                    }
+                }
+            }
+        }
+
+        leaveScope()
+    }
+
+    override fun visit(node: ArrayLiteralNode) {
+        super.visit(node)
+        compiledBlock.emitArray(node.items.size)
     }
 
     override fun visit(node: CharLiteralNode) {
@@ -87,7 +140,6 @@ abstract class AbstractBytecodeCompiler<T>(
     }
 
     override fun visit(node: StatementExprNode) {
-        // TODO don't emit a 'pop' after the last expr in block
         super.visit(node)
         compiledBlock.emitPop()
     }

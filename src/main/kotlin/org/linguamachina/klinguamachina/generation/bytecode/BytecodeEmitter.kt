@@ -52,7 +52,8 @@ interface BytecodeEmitter {
     fun emitConstInt(immediateValue: Int)
 
     // Blocks
-    fun closure(copiedVariableCount: Int, argsCount: Int, length: Int)
+    fun emitClosure(copiedVariableCount: Int, argsCount: Int,
+                    closureBodyEmitter: () -> Unit)
     fun emitReturn()
     fun emitNonLocalReturn()
 
