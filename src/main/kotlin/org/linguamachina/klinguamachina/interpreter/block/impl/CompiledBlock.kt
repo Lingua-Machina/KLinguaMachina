@@ -9,7 +9,7 @@ import org.linguamachina.klinguamachina.generation.impl.BaseIndexedSet
 import org.linguamachina.klinguamachina.interpreter.block.Block
 import org.linguamachina.klinguamachina.interpreter.block.BlockLiteralValue
 
-@ExperimentalUnsignedTypes
+@OptIn(ExperimentalUnsignedTypes::class, ExperimentalStdlibApi::class)
 class CompiledBlock(
     arity: Int
 ): Block(arity), BytecodeEmitter, BytecodeStorage {
@@ -43,7 +43,6 @@ class CompiledBlock(
         }
     }
 
-    @ExperimentalStdlibApi
     fun removeModuleReturns() {
         if (hasModuleReturn && bytecodes.isNotEmpty()) {
             hasModuleReturn = false

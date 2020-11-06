@@ -8,8 +8,6 @@ import org.linguamachina.klinguamachina.interpreter.module.impl.BytecodeModule
 import org.linguamachina.klinguamachina.interpreter.primitive.impl.PrimitiveRegistryImpl
 import org.linguamachina.klinguamachina.parsing.ast.antlr.AntlrASTBuilder
 
-@ExperimentalStdlibApi
-@ExperimentalUnsignedTypes
 fun main(vararg args: String) {
     val fakeInterpreterContext = object : InterpreterContext {
         override val primitiveRegistry = PrimitiveRegistryImpl()

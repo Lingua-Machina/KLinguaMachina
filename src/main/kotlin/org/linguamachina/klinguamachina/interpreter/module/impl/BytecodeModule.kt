@@ -4,7 +4,6 @@ import org.linguamachina.klinguamachina.interpreter.block.impl.CompiledBlock
 import org.linguamachina.klinguamachina.interpreter.module.Module
 import org.linguamachina.klinguamachina.parsing.ast.nodes.impl.CompileStatementNode
 
-@ExperimentalUnsignedTypes
 class BytecodeModule(
     override val sourceName: String,
     var sourceCode: String = ""

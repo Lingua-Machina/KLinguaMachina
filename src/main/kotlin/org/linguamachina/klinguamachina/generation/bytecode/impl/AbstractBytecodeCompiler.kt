@@ -17,7 +17,7 @@ import org.linguamachina.klinguamachina.util.getSelectorFromKeywords
 import org.linguamachina.klinguamachina.util.getSymbolFromSelector
 import org.linguamachina.klinguamachina.util.messageSelectorArity
 
-@ExperimentalUnsignedTypes
+@OptIn(ExperimentalUnsignedTypes::class, ExperimentalStdlibApi::class)
 abstract class AbstractBytecodeCompiler<T>(
     protected val astRootNode: ASTNode,
     private var currentScope: Scope,

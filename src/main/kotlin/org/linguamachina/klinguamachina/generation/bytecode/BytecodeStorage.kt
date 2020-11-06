@@ -1,6 +1,6 @@
 package org.linguamachina.klinguamachina.generation.bytecode
 
-@ExperimentalUnsignedTypes
+@OptIn(ExperimentalUnsignedTypes::class)
 interface BytecodeStorage {
     val bytecodes: MutableList<UInt>
 }

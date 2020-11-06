@@ -7,8 +7,6 @@ import org.linguamachina.klinguamachina.parsing.ast.nodes.castASTNode
 import org.linguamachina.klinguamachina.parsing.ast.nodes.impl.RootNode
 import org.linguamachina.klinguamachina.parsing.ast.visitors.impl.ASTNodePrinter
 
-@ExperimentalStdlibApi
-@ExperimentalUnsignedTypes
 class DebugBytecodeEvaluator(
     interpreterContext: InterpreterContext,
     astBuilder: ASTBuilder,

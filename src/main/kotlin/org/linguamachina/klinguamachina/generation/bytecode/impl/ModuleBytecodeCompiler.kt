@@ -7,8 +7,6 @@ import org.linguamachina.klinguamachina.interpreter.module.impl.BytecodeModule
 import org.linguamachina.klinguamachina.interpreter.primitive.PrimitiveRegistry
 import org.linguamachina.klinguamachina.parsing.ast.nodes.impl.RootNode
 
-@ExperimentalStdlibApi
-@ExperimentalUnsignedTypes
 class ModuleBytecodeCompiler(
     private val module: BytecodeModule,
     astRootNode: RootNode,
