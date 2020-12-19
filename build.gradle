@@ -1,0 +1,38 @@
+plugins {
+    id('org.jetbrains.kotlin.jvm') version '1.4.20-RC'
+    id 'application'
+}
+
+group = 'org.linguamachina.klinguamachina'
+version = '0.1.0-SNAPSHOT'
+
+mainClassName = 'org.linguamachina.klinguamachina.cli.MainKt'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
+    implementation 'org.jetbrains.kotlin:kotlin-reflect'
+    implementation 'org.antlr:antlr4:4.8'
+
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.6.1'
+}
+
+tasks {
+    test {
+        useJUnitPlatform()
+        testLogging.showStandardStreams = true
+        testLogging.exceptionFormat = 'full'
+    }
+
+    compileKotlin {
+        kotlinOptions.jvmTarget = '1.8'
+        kotlinOptions.freeCompilerArgs += '-Xopt-in=kotlin.RequiresOptIn'
+    }
+    compileTestKotlin {
+        kotlinOptions.jvmTarget = '1.8'
+        kotlinOptions.freeCompilerArgs += '-Xopt-in=kotlin.RequiresOptIn'
+    }
+}
