@@ -87,18 +87,22 @@ abstract class AbstractBytecodeCompiler<T>(
         compiledBlock.emitClosure(copies.size + copiedRefs.size + refs.size, node.paramNames.size) {
             super.visit(node)
             if (node.statements.isNotEmpty()) {
-                when (node.statements.last()) {
-                    is StatementExprNode -> {
+                val lastStmt = node.statements.last()
+                when {
+                    lastStmt is StatementExprNode -> {
                         if (compiledBlock.bytecodes.last() == Bytecode.POP.ordinal.toUInt()) {
                             compiledBlock.bytecodes.removeLast()
                         }
                         compiledBlock.emitReturn()
                     }
-                    !is NonLocalReturnNode, !is LocalReturnNode -> {
+                    lastStmt !is NonLocalReturnNode && lastStmt !is LocalReturnNode -> {
                         compiledBlock.emitNil()
                         compiledBlock.emitReturn()
                     }
                 }
+            } else {
+                compiledBlock.emitNil()
+                compiledBlock.emitReturn()
             }
         }
 
@@ -242,6 +246,16 @@ abstract class AbstractBytecodeCompiler<T>(
         } else {
             throw VariableAlreadyDeclared(node.name, node.position)
         }
+    }
+
+    override fun visit(node: LocalReturnNode) {
+        visit(node.expression)
+        compiledBlock.emitReturn()
+    }
+
+    override fun visit(node: NonLocalReturnNode) {
+        visit(node.expression)
+        compiledBlock.emitNonLocalReturn()
     }
 
     private fun emitGetVariable(node: IdentifierNode) {

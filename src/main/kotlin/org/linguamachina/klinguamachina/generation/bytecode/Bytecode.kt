@@ -1,5 +1,7 @@
 package org.linguamachina.klinguamachina.generation.bytecode
 
+import org.linguamachina.klinguamachina.generation.bytecode.exceptions.UnknownBytecode
+
 enum class Bytecode(
     val immediateArgsCount: Int,
     val stackArgsCount: Int,
@@ -63,5 +65,10 @@ enum class Bytecode(
     // Stack manipulation
     POP(0, 1, 0),
     DUP(0, 1, 2),
-    SWAP(0, 2, 2)
+    SWAP(0, 2, 2);
+
+    companion object {
+        fun fromInt(value: Int) = values().firstOrNull { it.ordinal == value }
+            ?: throw UnknownBytecode(value)
+    }
 }

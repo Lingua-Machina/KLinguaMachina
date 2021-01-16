@@ -24,12 +24,10 @@ internal class PrimitiveBindingTest {
 
     @Test
     fun `Don't bind unregistered primitive`() {
-        val fakeInterpreterContext = getFakeInterpreterContext()
-        val bytecodeModule = BytecodeModule.testModule(TEST_ID)
         val bytecodeEvaluator = BytecodeEvaluator(
-            fakeInterpreterContext,
+            getFakeInterpreterContext(),
             AntlrASTBuilder(),
-            bytecodeModule)
+            BytecodeModule.testModule(TEST_ID))
 
         assertThrows<UnregisteredPrimitive> {
             // TODO remove 'Object := 1337 class' stub
@@ -45,11 +43,10 @@ internal class PrimitiveBindingTest {
     @Test
     fun `Don't bind non-matching arity primitives`() {
         val fakeInterpreterContext = getFakeInterpreterContext()
-        val bytecodeModule = BytecodeModule.testModule(TEST_ID)
         val bytecodeEvaluator = BytecodeEvaluator(
             fakeInterpreterContext,
             AntlrASTBuilder(),
-            bytecodeModule)
+            BytecodeModule.testModule(TEST_ID))
 
         fakeInterpreterContext.primitiveRegistry.registerPrimitive(PRIMITIVE_NAME,
             PrimitiveBlock(PRIMITIVE_NAME, 1337))
@@ -68,11 +65,10 @@ internal class PrimitiveBindingTest {
     @Test
     fun `Successfully bind primitive`() {
         val fakeInterpreterContext = getFakeInterpreterContext()
-        val bytecodeModule = BytecodeModule.testModule(TEST_ID)
         val bytecodeEvaluator = BytecodeEvaluator(
             fakeInterpreterContext,
             AntlrASTBuilder(),
-            bytecodeModule)
+            BytecodeModule.testModule(TEST_ID))
 
         fakeInterpreterContext.primitiveRegistry.registerPrimitive(PRIMITIVE_NAME,
             PrimitiveBlock(PRIMITIVE_NAME, 0))

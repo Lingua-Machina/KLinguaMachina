@@ -20,7 +20,7 @@ class BytecodeModule(
             BytecodeModule("<repl>")
 
         fun testModule(testId: Int, testInput: String = ""): BytecodeModule =
-            BytecodeModule("<test$testId>", testInput)
+            BytecodeModule("<test:$testId>", testInput)
     }
 
     override fun toString(): String {
