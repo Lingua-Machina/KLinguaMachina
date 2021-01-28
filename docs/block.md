@@ -8,7 +8,7 @@ to a particular line into the source code.
 A CompiledBlock is composed of a literal pool used to contain indexed literals. These literals
 are referenced in the byte codes by their index. The literal pool contains the messages names, strings, symbols, chars and numbers used in the block.
 A CompiledBlock also contains references to [pools](pools.md).
-A CompiledBlock contains a collection of org.linguamachina.klinguamachina.exceptions it could encounter and their respective handlers.
+A CompiledBlock contains a collection of exceptions it could encounter and their respective handlers.
 
 ## CompiledClosureBlock
 
