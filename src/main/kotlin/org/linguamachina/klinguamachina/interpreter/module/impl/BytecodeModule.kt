@@ -2,7 +2,7 @@ package org.linguamachina.klinguamachina.interpreter.module.impl
 
 import org.linguamachina.klinguamachina.interpreter.block.impl.CompiledBlock
 import org.linguamachina.klinguamachina.interpreter.module.Module
-import org.linguamachina.klinguamachina.parsing.ast.nodes.impl.CompileStatementNode
+import org.linguamachina.klinguamachina.parser.ast.nodes.impl.CompileStatementNode
 
 class BytecodeModule(
     override val sourceName: String,

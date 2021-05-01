@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.linguamachina.klinguamachina.generation.impl.BlockScope
-import org.linguamachina.klinguamachina.parsing.ast.nodes.impl.*
+import org.linguamachina.klinguamachina.parser.ast.nodes.impl.*
 import org.linguamachina.klinguamachina.*
 
 internal class ClosureVariablesUsageAnalysisTest{

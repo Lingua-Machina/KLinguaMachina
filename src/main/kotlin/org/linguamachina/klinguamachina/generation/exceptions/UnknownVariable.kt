@@ -1,6 +1,6 @@
 package org.linguamachina.klinguamachina.generation.exceptions
 
-import org.linguamachina.klinguamachina.parsing.SourcePosition
+import org.linguamachina.klinguamachina.parser.SourcePosition
 
 class UnknownVariable(
     val name: String,

@@ -1,7 +1,7 @@
 package org.linguamachina.klinguamachina.util
 
 import org.linguamachina.klinguamachina.interpreter.block.impl.SymbolConstant
-import org.linguamachina.klinguamachina.parsing.ast.nodes.impl.MessageSelectorNode
+import org.linguamachina.klinguamachina.parser.ast.nodes.impl.MessageSelectorNode
 
 fun getSymbolFromSelector(selector: MessageSelectorNode) =
     SymbolConstant(selector.keywords.joinToString(separator = ":").let {

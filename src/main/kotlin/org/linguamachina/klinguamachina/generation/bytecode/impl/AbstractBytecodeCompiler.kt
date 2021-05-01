@@ -12,9 +12,9 @@ import org.linguamachina.klinguamachina.generation.impl.BlockScope
 import org.linguamachina.klinguamachina.interpreter.block.BlockLiteralValue
 import org.linguamachina.klinguamachina.interpreter.block.impl.*
 import org.linguamachina.klinguamachina.interpreter.primitive.PrimitiveRegistry
-import org.linguamachina.klinguamachina.parsing.ast.nodes.ASTNode
-import org.linguamachina.klinguamachina.parsing.ast.nodes.impl.*
-import org.linguamachina.klinguamachina.parsing.ast.BaseASTNodeVisitor
+import org.linguamachina.klinguamachina.parser.ast.nodes.ASTNode
+import org.linguamachina.klinguamachina.parser.ast.nodes.impl.*
+import org.linguamachina.klinguamachina.parser.ast.BaseASTNodeVisitor
 import org.linguamachina.klinguamachina.util.getSelectorFromKeywords
 import org.linguamachina.klinguamachina.util.getSymbolFromSelector
 import org.linguamachina.klinguamachina.util.messageSelectorArity

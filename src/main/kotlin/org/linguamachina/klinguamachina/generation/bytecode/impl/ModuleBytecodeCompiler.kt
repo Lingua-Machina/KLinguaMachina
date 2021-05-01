@@ -5,7 +5,7 @@ import org.linguamachina.klinguamachina.generation.impl.ModuleScope
 import org.linguamachina.klinguamachina.interpreter.module.Module
 import org.linguamachina.klinguamachina.interpreter.module.impl.BytecodeModule
 import org.linguamachina.klinguamachina.interpreter.primitive.PrimitiveRegistry
-import org.linguamachina.klinguamachina.parsing.ast.nodes.impl.RootNode
+import org.linguamachina.klinguamachina.parser.ast.nodes.impl.RootNode
 
 class ModuleBytecodeCompiler(
     private val module: BytecodeModule,

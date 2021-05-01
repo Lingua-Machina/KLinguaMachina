@@ -2,10 +2,10 @@ package org.linguamachina.klinguamachina
 
 import org.junit.jupiter.api.Assertions.*
 import org.linguamachina.klinguamachina.generation.bytecode.Bytecode
-import org.linguamachina.klinguamachina.parsing.ast.antlr.AntlrASTBuilder
-import org.linguamachina.klinguamachina.parsing.ast.nodes.impl.BlockLiteralNode
-import org.linguamachina.klinguamachina.parsing.ast.nodes.impl.RootNode
-import org.linguamachina.klinguamachina.parsing.ast.nodes.impl.StatementExprNode
+import org.linguamachina.klinguamachina.parser.ast.antlr.AntlrASTBuilder
+import org.linguamachina.klinguamachina.parser.ast.nodes.impl.BlockLiteralNode
+import org.linguamachina.klinguamachina.parser.ast.nodes.impl.RootNode
+import org.linguamachina.klinguamachina.parser.ast.nodes.impl.StatementExprNode
 
 fun String.parse() =
     AntlrASTBuilder().buildBaseAST(this, "<test>")

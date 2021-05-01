@@ -4,9 +4,9 @@ import org.linguamachina.klinguamachina.eval.Evaluator
 import org.linguamachina.klinguamachina.generation.bytecode.impl.ModuleBytecodeCompiler
 import org.linguamachina.klinguamachina.interpreter.context.InterpreterContext
 import org.linguamachina.klinguamachina.interpreter.module.impl.BytecodeModule
-import org.linguamachina.klinguamachina.parsing.ast.ASTBuilder
-import org.linguamachina.klinguamachina.parsing.ast.transformBaseAST
-import org.linguamachina.klinguamachina.parsing.ast.validateAST
+import org.linguamachina.klinguamachina.parser.ast.ASTBuilder
+import org.linguamachina.klinguamachina.parser.ast.transformBaseAST
+import org.linguamachina.klinguamachina.parser.ast.validateAST
 
 open class BytecodeEvaluator(
     private val interpreterContext: InterpreterContext,

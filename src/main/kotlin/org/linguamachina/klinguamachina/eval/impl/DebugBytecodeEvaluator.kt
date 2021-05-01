@@ -4,12 +4,12 @@ import org.linguamachina.klinguamachina.eval.Evaluator
 import org.linguamachina.klinguamachina.generation.bytecode.impl.ModuleBytecodeCompiler
 import org.linguamachina.klinguamachina.interpreter.context.InterpreterContext
 import org.linguamachina.klinguamachina.interpreter.module.impl.BytecodeModule
-import org.linguamachina.klinguamachina.parsing.ast.ASTBuilder
-import org.linguamachina.klinguamachina.parsing.ast.transformBaseAST
-import org.linguamachina.klinguamachina.parsing.ast.nodes.castASTNode
-import org.linguamachina.klinguamachina.parsing.ast.nodes.impl.RootNode
-import org.linguamachina.klinguamachina.parsing.ast.validateAST
-import org.linguamachina.klinguamachina.parsing.ast.printers.ASTNodePrinter
+import org.linguamachina.klinguamachina.parser.ast.ASTBuilder
+import org.linguamachina.klinguamachina.parser.ast.transformBaseAST
+import org.linguamachina.klinguamachina.parser.ast.nodes.castASTNode
+import org.linguamachina.klinguamachina.parser.ast.nodes.impl.RootNode
+import org.linguamachina.klinguamachina.parser.ast.validateAST
+import org.linguamachina.klinguamachina.parser.ast.printers.ASTNodePrinter
 
 class DebugBytecodeEvaluator(
     private val interpreterContext: InterpreterContext,

@@ -9,7 +9,7 @@ import org.linguamachina.klinguamachina.interpreter.module.impl.BytecodeModule
 import org.linguamachina.klinguamachina.interpreter.primitive.impl.PrimitiveRegistryImpl
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
-import org.linguamachina.klinguamachina.parsing.ast.antlr.AntlrASTBuilder
+import org.linguamachina.klinguamachina.parser.ast.antlr.AntlrASTBuilder
 
 internal class PrimitiveBindingTest {
     private var TEST_ID = 0
