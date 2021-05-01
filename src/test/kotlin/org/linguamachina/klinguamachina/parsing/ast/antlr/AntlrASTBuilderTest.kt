@@ -12,7 +12,7 @@ internal class AntlrASTBuilderTest {
         val input = "1337"
 
         // WHEN org.linguamachina.klinguamachina.parsing the input
-        AntlrASTBuilder().build(input, "<test>")
+        AntlrASTBuilder().buildBaseAST(input, "<test>")
 
         // THEN no exception is thrown
     }
@@ -23,7 +23,7 @@ internal class AntlrASTBuilderTest {
         val input = "13.37"
 
         // WHEN org.linguamachina.klinguamachina.parsing the input
-        AntlrASTBuilder().build(input, "<test>")
+        AntlrASTBuilder().buildBaseAST(input, "<test>")
 
         // THEN no exception is thrown
     }
@@ -34,7 +34,7 @@ internal class AntlrASTBuilderTest {
         val input = "\"hello world!\""
 
         // WHEN org.linguamachina.klinguamachina.parsing the input
-        AntlrASTBuilder().build(input, "<test>")
+        AntlrASTBuilder().buildBaseAST(input, "<test>")
 
         // THEN no exception is thrown
     }
@@ -45,7 +45,7 @@ internal class AntlrASTBuilderTest {
         val input = "\$a"
 
         // WHEN org.linguamachina.klinguamachina.parsing the input
-        AntlrASTBuilder().build(input, "<test>")
+        AntlrASTBuilder().buildBaseAST(input, "<test>")
 
         // THEN no exception is thrown
     }
@@ -56,7 +56,7 @@ internal class AntlrASTBuilderTest {
         val input = "'hello:world"
 
         // WHEN org.linguamachina.klinguamachina.parsing the input
-        AntlrASTBuilder().build(input, "<test>")
+        AntlrASTBuilder().buildBaseAST(input, "<test>")
 
         // THEN no exception is thrown
     }
@@ -67,7 +67,7 @@ internal class AntlrASTBuilderTest {
         val input = "yeet"
 
         // WHEN org.linguamachina.klinguamachina.parsing the input
-        AntlrASTBuilder().build(input, "<test>")
+        AntlrASTBuilder().buildBaseAST(input, "<test>")
 
         // THEN no exception is thrown
     }
@@ -78,7 +78,7 @@ internal class AntlrASTBuilderTest {
         val input = "[1, 3, 3, 7, \"hello\", true]"
 
         // WHEN org.linguamachina.klinguamachina.parsing the input
-        AntlrASTBuilder().build(input, "<test>")
+        AntlrASTBuilder().buildBaseAST(input, "<test>")
 
         // THEN no exception is thrown
     }
@@ -89,7 +89,7 @@ internal class AntlrASTBuilderTest {
         val input = "{ ^1337 }"
 
         // WHEN org.linguamachina.klinguamachina.parsing the input
-        AntlrASTBuilder().build(input, "<test>")
+        AntlrASTBuilder().buildBaseAST(input, "<test>")
 
         // THEN no exception is thrown
     }
@@ -100,7 +100,7 @@ internal class AntlrASTBuilderTest {
         val input = "{ | yeet nice | ^yeet + nice }"
 
         // WHEN org.linguamachina.klinguamachina.parsing the input
-        AntlrASTBuilder().build(input, "<test>")
+        AntlrASTBuilder().buildBaseAST(input, "<test>")
 
         // THEN no exception is thrown
     }
@@ -111,7 +111,7 @@ internal class AntlrASTBuilderTest {
         val input = "1337 hello"
 
         // WHEN org.linguamachina.klinguamachina.parsing the input
-        AntlrASTBuilder().build(input, "<test>")
+        AntlrASTBuilder().buildBaseAST(input, "<test>")
 
         // THEN no exception is thrown
     }
@@ -122,7 +122,7 @@ internal class AntlrASTBuilderTest {
         val input = "1337 hello: 'world"
 
         // WHEN org.linguamachina.klinguamachina.parsing the input
-        AntlrASTBuilder().build(input, "<test>")
+        AntlrASTBuilder().buildBaseAST(input, "<test>")
 
         // THEN no exception is thrown
     }
@@ -133,7 +133,7 @@ internal class AntlrASTBuilderTest {
         val input = "1337 hello | world | yeet"
 
         // WHEN org.linguamachina.klinguamachina.parsing the input
-        AntlrASTBuilder().build(input, "<test>")
+        AntlrASTBuilder().buildBaseAST(input, "<test>")
 
         // THEN no exception is thrown
     }
@@ -144,7 +144,7 @@ internal class AntlrASTBuilderTest {
         val input = "1337 hello |> world |> yeet"
 
         // WHEN org.linguamachina.klinguamachina.parsing the input
-        AntlrASTBuilder().build(input, "<test>")
+        AntlrASTBuilder().buildBaseAST(input, "<test>")
 
         // THEN no exception is thrown
     }
@@ -155,7 +155,7 @@ internal class AntlrASTBuilderTest {
         val input = "!1337 hello | (world |> noice: -(1337 + 42)) | yeet"
 
         // WHEN org.linguamachina.klinguamachina.parsing the input
-        AntlrASTBuilder().build(input, "<test>")
+        AntlrASTBuilder().buildBaseAST(input, "<test>")
 
         // THEN no exception is thrown
     }
@@ -172,7 +172,7 @@ internal class AntlrASTBuilderTest {
         """.trimIndent()
 
         // WHEN org.linguamachina.klinguamachina.parsing the input
-        AntlrASTBuilder().build(input, "<test>")
+        AntlrASTBuilder().buildBaseAST(input, "<test>")
 
         // THEN no exception is thrown
     }
@@ -185,7 +185,7 @@ internal class AntlrASTBuilderTest {
         """.trimIndent()
 
         // WHEN org.linguamachina.klinguamachina.parsing the input
-        AntlrASTBuilder().build(input, "<test>")
+        AntlrASTBuilder().buildBaseAST(input, "<test>")
 
         // THEN no exception is thrown
     }
@@ -196,7 +196,7 @@ internal class AntlrASTBuilderTest {
         val input = "a < b || b > a || a <= b || a >= b || a == b || a != b"
 
         // WHEN org.linguamachina.klinguamachina.parsing the input
-        AntlrASTBuilder().build(input, "<test>")
+        AntlrASTBuilder().buildBaseAST(input, "<test>")
 
         // THEN no exception is thrown
     }
@@ -209,7 +209,7 @@ internal class AntlrASTBuilderTest {
         // WHEN org.linguamachina.klinguamachina.parsing the input
         // THEN a syntax error exception is thrown
         assertThrows<SyntaxError> {
-            AntlrASTBuilder().build(input, "<test>")
+            AntlrASTBuilder().buildBaseAST(input, "<test>")
         }
     }
 }

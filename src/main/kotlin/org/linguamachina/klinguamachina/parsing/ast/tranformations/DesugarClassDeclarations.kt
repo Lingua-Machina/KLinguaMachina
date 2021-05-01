@@ -1,8 +1,8 @@
-package org.linguamachina.klinguamachina.parsing.ast.visitors.impl
+package org.linguamachina.klinguamachina.parsing.ast.tranformations
 
 import org.linguamachina.klinguamachina.parsing.ast.nodes.StatementNode
 import org.linguamachina.klinguamachina.parsing.ast.nodes.impl.*
-import org.linguamachina.klinguamachina.parsing.ast.visitors.BaseASTNodeVisitor
+import org.linguamachina.klinguamachina.parsing.ast.BaseASTNodeVisitor
 import org.linguamachina.klinguamachina.util.getSelectorFromKeywords
 
 class DesugarClassDeclarations: BaseASTNodeVisitor<Unit> {

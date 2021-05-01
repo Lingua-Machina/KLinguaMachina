@@ -21,8 +21,8 @@ fun main(vararg args: String) {
     val bytecodeModule = BytecodeModule.replModule()
     val bytecodeEvaluator = DebugBytecodeEvaluator(
         fakeInterpreterContext,
-        AntlrASTBuilder(),
-        bytecodeModule)
+        bytecodeModule,
+        AntlrASTBuilder())
     val repl = Repl(bytecodeEvaluator)
     repl.start()
 }

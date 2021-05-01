@@ -1,9 +1,9 @@
-package org.linguamachina.klinguamachina.parsing.ast.visitors.impl
+package org.linguamachina.klinguamachina.parsing.ast.validators
 
 import org.linguamachina.klinguamachina.parsing.ast.exceptions.NamingError
 import org.linguamachina.klinguamachina.parsing.ast.nodes.impl.VarAssignmentNode
 import org.linguamachina.klinguamachina.parsing.ast.nodes.impl.VarDeclarationNode
-import org.linguamachina.klinguamachina.parsing.ast.visitors.BaseASTNodeVisitor
+import org.linguamachina.klinguamachina.parsing.ast.BaseASTNodeVisitor
 
 private const val SELF = "self"
 private const val THIS_CONTEXT = "thisContext"

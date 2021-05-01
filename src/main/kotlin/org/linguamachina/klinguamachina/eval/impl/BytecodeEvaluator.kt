@@ -5,16 +5,13 @@ import org.linguamachina.klinguamachina.generation.bytecode.impl.ModuleBytecodeC
 import org.linguamachina.klinguamachina.interpreter.context.InterpreterContext
 import org.linguamachina.klinguamachina.interpreter.module.impl.BytecodeModule
 import org.linguamachina.klinguamachina.parsing.ast.ASTBuilder
-import org.linguamachina.klinguamachina.parsing.ast.applyASTTransformations
-import org.linguamachina.klinguamachina.parsing.ast.nodes.impl.RootNode
+import org.linguamachina.klinguamachina.parsing.ast.transformBaseAST
 import org.linguamachina.klinguamachina.parsing.ast.validateAST
 
 open class BytecodeEvaluator(
-    val interpreterContext: InterpreterContext,
+    private val interpreterContext: InterpreterContext,
+    private val bytecodeModule: BytecodeModule,
     astBuilder: ASTBuilder,
-    val bytecodeModule: BytecodeModule,
-    private val onParseAction: (RootNode) -> Unit = {},
-    private val onCompileAction: (BytecodeModule) -> Unit = {}
 ): Evaluator<Unit>(interpreterContext, astBuilder, bytecodeModule) {
 
     override fun eval() {
@@ -26,16 +23,14 @@ open class BytecodeEvaluator(
     }
 
     private fun evalSourceCode(sourceCode: String) {
-        val ast = astBuilder.build(sourceCode, bytecodeModule.sourceName)
-        applyASTTransformations(ast)
+        val ast = astBuilder.buildBaseAST(sourceCode, bytecodeModule.sourceName)
+        transformBaseAST(ast)
         validateAST(ast)
-        onParseAction(ast)
         ModuleBytecodeCompiler(
             bytecodeModule,
             ast,
             interpreterContext.primitiveRegistry
         ).compile()
-        onCompileAction(bytecodeModule)
         bytecodeModule.sourceCode += "$sourceCode\n"
     }
 }

@@ -1,4 +1,4 @@
-package org.linguamachina.klinguamachina.parsing.ast.visitors
+package org.linguamachina.klinguamachina.parsing.ast
 
 import org.linguamachina.klinguamachina.parsing.ast.nodes.impl.*
 

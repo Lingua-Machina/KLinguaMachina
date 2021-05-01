@@ -8,7 +8,7 @@ import org.linguamachina.klinguamachina.parsing.ast.nodes.impl.RootNode
 import org.linguamachina.klinguamachina.parsing.ast.nodes.impl.StatementExprNode
 
 fun String.parse() =
-    AntlrASTBuilder().build(this, "<test>")
+    AntlrASTBuilder().buildBaseAST(this, "<test>")
 
 fun RootNode.closure() =
     (statements[0] as StatementExprNode).expression as BlockLiteralNode

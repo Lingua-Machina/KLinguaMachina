@@ -1,8 +1,7 @@
-package org.linguamachina.klinguamachina.parsing.ast.visitors.impl
+package org.linguamachina.klinguamachina.parsing.ast.printers
 
 import org.linguamachina.klinguamachina.parsing.ast.nodes.impl.*
-import org.linguamachina.klinguamachina.parsing.ast.visitors.BaseASTNodeVisitor
-import org.linguamachina.klinguamachina.parsing.ast.visitors.impl.astnodeprinter.ASTStringBuilder
+import org.linguamachina.klinguamachina.parsing.ast.BaseASTNodeVisitor
 
 class ASTNodePrinter: BaseASTNodeVisitor<String> {
 

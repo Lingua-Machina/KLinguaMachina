@@ -1,4 +1,4 @@
-package org.linguamachina.klinguamachina.parsing.ast.visitors.impl.astnodeprinter
+package org.linguamachina.klinguamachina.parsing.ast.printers
 
 class ASTStringBuilder(private val indentString: String = "  ") {
     private val stringBuilder = StringBuilder()

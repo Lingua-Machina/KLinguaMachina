@@ -7,8 +7,6 @@
 
 **get_module** <*module variable index*> : . -> value
 
-**get_module** <*module variable index*> : . -> value
-
 **get_instance** <*instance variable index*> : . -> value
 
 **get_class** <*class variable index*> : . -> value

@@ -3,7 +3,7 @@ package org.linguamachina.klinguamachina.generation.closure
 import org.linguamachina.klinguamachina.generation.Scope
 import org.linguamachina.klinguamachina.generation.impl.BlockScope
 import org.linguamachina.klinguamachina.parsing.ast.nodes.impl.*
-import org.linguamachina.klinguamachina.parsing.ast.visitors.BaseASTNodeVisitor
+import org.linguamachina.klinguamachina.parsing.ast.BaseASTNodeVisitor
 
 class ClosureVariablesUsageAnalysis(
     private val originalScope: Scope

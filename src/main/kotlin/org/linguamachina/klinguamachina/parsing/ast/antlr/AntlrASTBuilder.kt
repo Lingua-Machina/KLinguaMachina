@@ -2,7 +2,7 @@ package org.linguamachina.klinguamachina.parsing.ast.antlr
 
 import org.antlr.v4.runtime.CommonTokenStream
 import org.antlr.v4.runtime.CharStreams
-import org.antlr.v4.runtime.Token
+import org.antlr.v4.runtime.ParserRuleContext
 import org.antlr.v4.runtime.tree.ParseTree
 import org.antlr.v4.runtime.tree.TerminalNode
 import org.linguamachina.klinguamachina.parsing.SourcePosition
@@ -16,7 +16,7 @@ import org.linguamachina.klinguamachina.parsing.ast.nodes.impl.*
 
 class AntlrASTBuilder: LinguaMachinaBaseVisitor<ASTNode>(), ASTBuilder {
 
-    override fun build(input: String, sourceName: String): RootNode {
+    override fun buildBaseAST(input: String, sourceName: String): RootNode {
         val lexer = LinguaMachinaLexer(CharStreams.fromString(input, sourceName))
         val parser = LinguaMachinaParser(CommonTokenStream(lexer))
         // remove the default error listener to disable error printing
@@ -27,10 +27,12 @@ class AntlrASTBuilder: LinguaMachinaBaseVisitor<ASTNode>(), ASTBuilder {
 
     /********************* Utility Methods *********************/
 
-    private fun position(token: Token) = SourcePosition(
-        token.line,
-        token.charPositionInLine,
-        token.tokenSource.sourceName
+    private fun position(parserRuleContext: ParserRuleContext) = SourcePosition(
+        parserRuleContext.start.line,
+        parserRuleContext.start.charPositionInLine,
+        parserRuleContext.stop.line,
+        parserRuleContext.stop.charPositionInLine,
+        parserRuleContext.start.tokenSource.sourceName
     )
 
     private tailrec fun stripUnnecessaryOperation(node: ExpressionNode): ExpressionNode =
@@ -53,7 +55,7 @@ class AntlrASTBuilder: LinguaMachinaBaseVisitor<ASTNode>(), ASTBuilder {
 
     override fun visitRoot(ctx: LinguaMachinaParser.RootContext): ASTNode {
         return RootNode(
-            position(ctx.start),
+            position(ctx),
             ctx.statements().statement().map {
                 castASTNode(visit(it))
             }
@@ -70,14 +72,14 @@ class AntlrASTBuilder: LinguaMachinaBaseVisitor<ASTNode>(), ASTBuilder {
 
     override fun visitIntegerLiteral(ctx: LinguaMachinaParser.IntegerLiteralContext): ASTNode {
         return IntegerLiteralNode(
-            position(ctx.start),
+            position(ctx),
             ctx.IntegerLiteral().symbol.text.toInt()
         )
     }
 
     override fun visitDoubleLiteral(ctx: LinguaMachinaParser.DoubleLiteralContext): ASTNode {
         return DoubleLiteralNode(
-            position(ctx.start),
+            position(ctx),
             ctx.DoubleLiteral().symbol.text.toDouble()
         )
     }
@@ -86,14 +88,14 @@ class AntlrASTBuilder: LinguaMachinaBaseVisitor<ASTNode>(), ASTBuilder {
         val text = ctx.StringLiteral().symbol.text
 
         return StringLiteralNode(
-            position(ctx.start),
+            position(ctx),
             text.substring(1, text.length - 1)
         )
     }
 
     override fun visitCharLiteral(ctx: LinguaMachinaParser.CharLiteralContext): ASTNode {
         return CharLiteralNode(
-            position(ctx.start),
+            position(ctx),
             ctx.CharLiteral().symbol.text[1]
         )
     }
@@ -102,28 +104,28 @@ class AntlrASTBuilder: LinguaMachinaBaseVisitor<ASTNode>(), ASTBuilder {
         val text = ctx.SymbolLiteral().symbol.text
 
         return SymbolLiteralNode(
-            position(ctx.start),
+            position(ctx),
             text.substring(1)
         )
     }
 
     override fun visitIdentifier(ctx: LinguaMachinaParser.IdentifierContext): ASTNode {
         return IdentifierNode(
-            position(ctx.start),
+            position(ctx),
             ctx.Identifier().symbol.text
         )
     }
 
     override fun visitArrayLiteral(ctx: LinguaMachinaParser.ArrayLiteralContext): ASTNode {
         return ArrayLiteralNode(
-            position(ctx.start),
+            position(ctx),
             ctx.expression().map { castASTNode(visit(it)) }
         )
     }
 
     override fun visitBlockLiteral(ctx: LinguaMachinaParser.BlockLiteralContext): ASTNode {
         return BlockLiteralNode(
-            position(ctx.start),
+            position(ctx),
             ctx.params.map { it.text },
             ctx.blockStatements()?.blockStatement()
                 ?.map { castASTNode(visit(it)) }
@@ -133,7 +135,7 @@ class AntlrASTBuilder: LinguaMachinaBaseVisitor<ASTNode>(), ASTBuilder {
 
     override fun visitUnaryMinus(ctx: LinguaMachinaParser.UnaryMinusContext): ASTNode {
         return UnaryOperationNode(
-            position(ctx.start),
+            position(ctx),
             castASTNode(visit(ctx.atom())),
             UnaryOperationOp.MINUS
         )
@@ -141,7 +143,7 @@ class AntlrASTBuilder: LinguaMachinaBaseVisitor<ASTNode>(), ASTBuilder {
 
     override fun visitUnaryNot(ctx: LinguaMachinaParser.UnaryNotContext): ASTNode {
         return UnaryOperationNode(
-            position(ctx.start),
+            position(ctx),
             castASTNode(visit(ctx.atom())),
             UnaryOperationOp.NOT
         )
@@ -153,7 +155,7 @@ class AntlrASTBuilder: LinguaMachinaBaseVisitor<ASTNode>(), ASTBuilder {
 
     override fun visitOrExpr(ctx: LinguaMachinaParser.OrExprContext): ASTNode {
         return OperationNode(
-            position(ctx.start),
+            position(ctx),
             ctx.andExpr().map {
                 stripUnnecessaryOperation(castASTNode(visit(it)))
             },
@@ -163,7 +165,7 @@ class AntlrASTBuilder: LinguaMachinaBaseVisitor<ASTNode>(), ASTBuilder {
 
     override fun visitAndExpr(ctx: LinguaMachinaParser.AndExprContext): ASTNode {
         return OperationNode(
-            position(ctx.start),
+            position(ctx),
             ctx.eqExpr().map {
                 stripUnnecessaryOperation(castASTNode(visit(it)))
             },
@@ -173,7 +175,7 @@ class AntlrASTBuilder: LinguaMachinaBaseVisitor<ASTNode>(), ASTBuilder {
 
     override fun visitEqExpr(ctx: LinguaMachinaParser.EqExprContext): ASTNode {
         return OperationNode(
-            position(ctx.start),
+            position(ctx),
             ctx.compExpr().map {
                 stripUnnecessaryOperation(castASTNode(visit(it)))
             },
@@ -190,7 +192,7 @@ class AntlrASTBuilder: LinguaMachinaBaseVisitor<ASTNode>(), ASTBuilder {
 
     override fun visitCompExpr(ctx: LinguaMachinaParser.CompExprContext): ASTNode {
         return OperationNode(
-            position(ctx.start),
+            position(ctx),
             ctx.arithExpr().map {
                 stripUnnecessaryOperation(castASTNode(visit(it)))
             },
@@ -209,7 +211,7 @@ class AntlrASTBuilder: LinguaMachinaBaseVisitor<ASTNode>(), ASTBuilder {
 
     override fun visitArithExpr(ctx: LinguaMachinaParser.ArithExprContext): ASTNode {
         return OperationNode(
-            position(ctx.start),
+            position(ctx),
             ctx.termExpr().map {
                 stripUnnecessaryOperation(castASTNode(visit(it)))
             },
@@ -226,7 +228,7 @@ class AntlrASTBuilder: LinguaMachinaBaseVisitor<ASTNode>(), ASTBuilder {
 
     override fun visitTermExpr(ctx: LinguaMachinaParser.TermExprContext): ASTNode {
         return OperationNode(
-            position(ctx.start),
+            position(ctx),
             ctx.factorExpr().map {
                 stripUnnecessaryOperation(castASTNode(visit(it)))
             },
@@ -236,7 +238,7 @@ class AntlrASTBuilder: LinguaMachinaBaseVisitor<ASTNode>(), ASTBuilder {
 
     override fun visitFactorExpr(ctx: LinguaMachinaParser.FactorExprContext): ASTNode {
         return OperationNode(
-            position(ctx.start),
+            position(ctx),
             ctx.moduloExpr().map {
                 stripUnnecessaryOperation(castASTNode(visit(it)))
             },
@@ -246,7 +248,7 @@ class AntlrASTBuilder: LinguaMachinaBaseVisitor<ASTNode>(), ASTBuilder {
 
     override fun visitModuloExpr(ctx: LinguaMachinaParser.ModuloExprContext): ASTNode {
         return OperationNode(
-            position(ctx.start),
+            position(ctx),
             ctx.messageExpr().map {
                 castASTNode(visit(it))
             },
@@ -262,7 +264,7 @@ class AntlrASTBuilder: LinguaMachinaBaseVisitor<ASTNode>(), ASTBuilder {
         return when (ctx.messageCascadeOrChain()) {
             null -> castASTNode(visit(ctx.unary()))
             else -> MessageSendingNode(
-                position(ctx.start),
+                position(ctx),
                 castASTNode(visit(ctx.unary())),
                 castASTNode(visit(ctx.messageCascadeOrChain()))
             )
@@ -271,7 +273,7 @@ class AntlrASTBuilder: LinguaMachinaBaseVisitor<ASTNode>(), ASTBuilder {
 
     override fun visitMessageSelector(ctx: LinguaMachinaParser.MessageSelectorContext): ASTNode {
         return MessageSelectorNode(
-            position(ctx.start),
+            position(ctx),
             ctx.identifier().map { castASTNode<IdentifierNode>(visit(it)).value },
             ctx.paramExpression().map {
                 castASTNode<ExpressionNode>(visit(it))
@@ -287,7 +289,7 @@ class AntlrASTBuilder: LinguaMachinaBaseVisitor<ASTNode>(), ASTBuilder {
             castASTNode(visit(it))
         })
         return MessageCascadeNode(
-            position(ctx.start),
+            position(ctx),
             selectors
         )
     }
@@ -300,7 +302,7 @@ class AntlrASTBuilder: LinguaMachinaBaseVisitor<ASTNode>(), ASTBuilder {
             castASTNode(visit(it))
         })
         return MessageChainNode(
-            position(ctx.start),
+            position(ctx),
             selectors
         )
     }
@@ -314,7 +316,7 @@ class AntlrASTBuilder: LinguaMachinaBaseVisitor<ASTNode>(), ASTBuilder {
 
     override fun visitVarDeclaration(ctx: LinguaMachinaParser.VarDeclarationContext): ASTNode {
         return VarDeclarationNode(
-            position(ctx.start),
+            position(ctx),
             castASTNode<IdentifierNode>(visit(ctx.identifier())).value,
             castASTNode(visit(ctx.expression()))
         )
@@ -322,7 +324,7 @@ class AntlrASTBuilder: LinguaMachinaBaseVisitor<ASTNode>(), ASTBuilder {
 
     override fun visitVarAssignment(ctx: LinguaMachinaParser.VarAssignmentContext): ASTNode {
         return VarAssignmentNode(
-            position(ctx.start),
+            position(ctx),
             castASTNode<IdentifierNode>(visit(ctx.identifier())).value,
             castASTNode(visit(ctx.expression()))
         )
@@ -330,13 +332,13 @@ class AntlrASTBuilder: LinguaMachinaBaseVisitor<ASTNode>(), ASTBuilder {
 
     override fun visitCompileStatement(ctx: LinguaMachinaParser.CompileStatementContext): ASTNode {
         return CompileStatementNode(
-            position(ctx.start),
+            position(ctx),
             castASTNode(visit(ctx.expression())),
             ctx.methodParams().keywords.map {
                 castASTNode<IdentifierNode>(visit(it)).value
             },
             BlockLiteralNode(
-                position(ctx.methodParams().stop),
+                position(ctx.methodParams()),
                 ctx.methodParams().params.map {
                     castASTNode<IdentifierNode>(visit(it)).value
                 },
@@ -349,7 +351,7 @@ class AntlrASTBuilder: LinguaMachinaBaseVisitor<ASTNode>(), ASTBuilder {
 
     override fun visitPrimitiveDeclStatement(ctx: LinguaMachinaParser.PrimitiveDeclStatementContext): ASTNode {
         return PrimitiveDeclStatementNode(
-            position(ctx.start),
+            position(ctx),
             castASTNode(visit(ctx.expression())),
             ctx.methodParams().keywords.map {
                 castASTNode<IdentifierNode>(visit(it)).value
@@ -363,14 +365,14 @@ class AntlrASTBuilder: LinguaMachinaBaseVisitor<ASTNode>(), ASTBuilder {
 
     override fun visitLocalReturn(ctx: LinguaMachinaParser.LocalReturnContext): ASTNode {
         return LocalReturnNode(
-            position(ctx.start),
+            position(ctx),
             castASTNode(visit(ctx.expression()))
         )
     }
 
     override fun visitNonLocalReturn(ctx: LinguaMachinaParser.NonLocalReturnContext): ASTNode {
         return NonLocalReturnNode(
-            position(ctx.start),
+            position(ctx),
             castASTNode(visit(ctx.expression()))
         )
     }
