@@ -4,7 +4,6 @@ plugins {
 }
 
 group = 'org.linguamachina.klinguamachina'
-version = '0.1.0-SNAPSHOT'
 
 mainClassName = 'org.linguamachina.klinguamachina.cli.MainKt'
 

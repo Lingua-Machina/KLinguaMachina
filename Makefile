@@ -1,13 +1,37 @@
-GRADLE=./gradlew
+###############################################################################
+# Project properties                                                          #
+###############################################################################
+NAME=KLinguaMachina
+VERSION=0.1.0-SNAPSHOT
 
-.PHONY: build test clean
+###############################################################################
+# Project paths                                                               #
+###############################################################################
+DIST=build/distributions
+
+###############################################################################
+# Tools and configuration                                                     #
+###############################################################################
+GRADLE=./gradlew
+GRADLE_ARGS=-Pversion=$(VERSION)
+
+###############################################################################
+# Targets                                                                     #
+###############################################################################
+
+.PHONY: build test clean repl
 
 build:
-	@$(GRADLE) build --warning-mode all
+	@$(GRADLE) $(GRADLE_ARGS) build -x test --warning-mode all
 
 test:
-	@$(GRADLE) test
+	@$(GRADLE) $(GRADLE_ARGS) test --warning-mode all
 
 clean:
 	@rm -r ./build
+
+repl: build
+	@tar -xf $(DIST)/$(NAME)-$(VERSION).tar -C $(DIST)
+	@$(DIST)/$(NAME)-$(VERSION)/bin/$(NAME)
+	@rm -r $(DIST)/$(NAME)-$(VERSION)
 
