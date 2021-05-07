@@ -5,14 +5,17 @@ import org.linguamachina.klinguamachina.parser.ast.nodes.impl.VarAssignmentNode
 import org.linguamachina.klinguamachina.parser.ast.nodes.impl.VarDeclarationNode
 import org.linguamachina.klinguamachina.parser.ast.BaseASTNodeVisitor
 
-private const val SELF = "self"
-private const val THIS_CONTEXT = "thisContext"
-
 class ValidateAssignments: BaseASTNodeVisitor<Unit> {
+    private val specialVariables = listOf(
+        "self",
+        "thisContext",
+        "module"
+    )
+
     override fun defaultValue() = Unit
 
     override fun visit(node: VarDeclarationNode) {
-        if (node.name == SELF || node.name == THIS_CONTEXT) {
+        if (node.name in specialVariables) {
             throw NamingError(
                 "'${node.name}' cannot be on the left hand side of a declaration")
         }
@@ -20,7 +23,7 @@ class ValidateAssignments: BaseASTNodeVisitor<Unit> {
     }
 
     override fun visit(node: VarAssignmentNode) {
-        if (node.name == SELF || node.name == THIS_CONTEXT) {
+        if (node.name in specialVariables) {
             throw NamingError(
                 "'${node.name}' cannot be on the left hand side of an assignment")
         }
