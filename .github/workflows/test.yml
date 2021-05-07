@@ -1,9 +1,10 @@
-name: Gradle build and tests
+name: Launch tests
 
 on:
   push:
     branches:
       - master
+      - develop
   pull_request:
     branches:
       - '**'
@@ -19,5 +20,5 @@ jobs:
         java-version: 8
     - uses: eskatos/gradle-command-action@v1
       with:
-        arguments: build
+        arguments: test
 
